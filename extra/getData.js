@@ -1,4 +1,4 @@
-import OAuth from 'oauth-1.0a';
+/*import OAuth from 'oauth-1.0a';
 import CryptoJS from 'crypto-js';
 
 async function getDataAPI() {
@@ -37,4 +37,4 @@ async function getDataAPI() {
   return data;
 }
 
-export default getDataAPI;
+export default getDataAPI;*/

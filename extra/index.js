@@ -1,5 +1,4 @@
-
-import cytoscape from 'cytoscape';
+/*import cytoscape from 'cytoscape';
 
 
 let cy = cytoscape({
@@ -114,4 +113,4 @@ let i = 0, tick = 1000;
     i++;
     setTimeout(arguments.callee,tick)
   }
-})()
+})()*/
