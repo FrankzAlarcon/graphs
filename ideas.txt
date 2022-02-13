@@ -1,0 +1,7 @@
+//Lo que se necesita para iniciar
+- instalar node
+- 
+
+
+//obetner los usuarios y edges con random
+//
