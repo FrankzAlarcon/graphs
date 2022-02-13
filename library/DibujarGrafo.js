@@ -1,6 +1,6 @@
 import cytoscape from 'cytoscape';
 
-class GraphFronted {
+class DibujarGrafo {
   constructor() {
     this.graph = cytoscape({
       container: document.getElementById('graph'),
@@ -49,4 +49,4 @@ class GraphFronted {
   }
 }
 
-export default GraphFronted;
+export default DibujarGrafo;

@@ -1,5 +1,9 @@
-import GraphFronted from './library/graph';
-const graph = new GraphFronted();
+import DibujarGrafo from './library/DibujarGrafo.js';
+import Grafo from './library/Grafo.js';
+
+let dibujoGrafo = new DibujarGrafo();
+const grafo = new Grafo();
+
 let misSeguidos = [
   {
     "id": "756982074",
@@ -112,13 +116,33 @@ let misSeguidos = [
     }
   }
 ];
+const owner = {
+  username: "KunAguero",
+  id: "12345678",
+  public_metrics: {
+      "followers_count": 1112529,
+      "following_count": 429,
+      "tweet_count": 7474,
+      "listed_count": 60
+  },
+  name: "Kun Aguero"
+}
 // let misSeguidos = []
-document.addEventListener('DOMContentLoaded',  () => {
+document.addEventListener('DOMContentLoaded',  /*async */() => {
   // await getSeguidos();
-  fillNodes();
-  fillEdges();
+  initApp()
+  fillNodes(misSeguidos);
+  fillEdgesAuto();
 })
 
+function initApp() {
+  const botonRutaMasCorta = document.querySelector('.ruta-mas-corta');
+  botonRutaMasCorta.addEventListener('click', () => {
+    const data =   rutaMasCorta(owner, misSeguidos[0])
+    console.log(data)
+    fillEdges(data)
+  })
+}
 
 async function getSeguidos() {
   const misSeguidosContainer = document.querySelector('.seguidos')
@@ -137,40 +161,51 @@ async function getSeguidos() {
   })
 }
 
-function fillNodes(){
-  const owner = {
-    username: "KunAguero",
-    id: "12345678",
-    public_metrics: {
-        "followers_count": 1112529,
-        "following_count": 429,
-        "tweet_count": 7474,
-        "listed_count": 60
-    },
-    name: "Kun Aguero"
-  }
-  graph.addNode(owner)
-  misSeguidos.forEach(user => {
-    graph.addNode(user)
+function fillNodes(listaNodos){
+  dibujoGrafo.addNode(owner)
+  grafo.agregarNodo(owner)
+  listaNodos.forEach(user => {
+    dibujoGrafo.addNode(user)
+    grafo.agregarNodo(user)
   })
 }
-function fillEdges() {
-  const owner = {
-    username: "KunAguero",
-    id: "12345678",
-    public_metrics: {
-        "followers_count": 1112529,
-        "following_count": 429,
-        "tweet_count": 7474,
-        "listed_count": 60
-    },
-    name: "Kun Aguero"
+function fillEdgesAuto() {
+  misSeguidos.forEach(user => {
+    try {
+      dibujoGrafo.addEdge(owner, user)
+      grafo.agregarAristaNoDirigida(owner, user, user.public_metrics.followers_count)
+    } catch (error) {
+      console.log(error)
+    }
+  })
+  dibujoGrafo.addEdge(misSeguidos[0], misSeguidos[1])
+  dibujoGrafo.addEdge(misSeguidos[0], misSeguidos[2])
+  dibujoGrafo.addEdge(misSeguidos[0], misSeguidos[3])
+  dibujoGrafo.addEdge(misSeguidos[0], misSeguidos[4])
+  dibujoGrafo.addEdge(misSeguidos[0], misSeguidos[5])
+
+  grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[1], misSeguidos[1].public_metrics.followers_count)
+  grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[2], misSeguidos[2].public_metrics.followers_count)
+  grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[3], misSeguidos[3].public_metrics.followers_count)
+  grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[4], misSeguidos[4].public_metrics.followers_count)
+  grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[5], misSeguidos[5].public_metrics.followers_count)
+  console.log(grafo)
+  // dibujoGrafo.addEdge(misSeguidos[5], misSeguidos[0])
+}
+function fillEdges(lista_edges) {
+  dibujoGrafo =  new DibujarGrafo();
+  const lista = lista_edges.map(user => JSON.parse(user))
+  console.log(lista)
+  lista.forEach(user => {
+    dibujoGrafo.addNode(user)//todo: devolver como obj en ruta mas corta
+  });
+  for(let i = 1; i < lista.length; i++) {
+    dibujoGrafo.addEdge(lista[i-1], lista[i])
   }
-  misSeguidos.forEach(user => graph.addEdge(owner, user))
-  graph.addEdge(misSeguidos[0], misSeguidos[1])
-  graph.addEdge(misSeguidos[0], misSeguidos[2])
-  graph.addEdge(misSeguidos[0], misSeguidos[3])
-  graph.addEdge(misSeguidos[0], misSeguidos[4])
-  graph.addEdge(misSeguidos[0], misSeguidos[5])
-  // graph.addEdge(misSeguidos[5], misSeguidos[0])
+
+}
+function rutaMasCorta(origen, destino) {
+  const data = grafo.bellmanFordGrafo(origen, destino)
+  // console.log(data)
+  return data[0];
 }
