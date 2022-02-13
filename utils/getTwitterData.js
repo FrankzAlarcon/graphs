@@ -1,11 +1,11 @@
-// const Twit = require("twit");
+/*// const Twit = require("twit");
 import Twit from 'twit';
 
 let twitter  = new Twit({
-  consumer_key: 'eukrhMeOtHiGlpxzkzMaOUz9b',
-  consumer_secret: 'W18F3RDZAb4VLGa7JXIhIFNQfz3HN4LR9IgD80jLniYxj6BYqO',
-  access_token: '4865683485-OxjXay7efuS8rtImSZLSv4ocZqRUnCN4QEYq8bl',
-  access_token_secret: '4RCc6jzLE9KksMJRS7eHwtdZY6lfwq0doGYlC2VMlqnXk'
+  consumer_key: 'eukrh',
+  consumer_secret: 'W',
+  access_token: '4',
+  access_token_secret: ''
 
 })
 function getData() {
@@ -23,4 +23,4 @@ export default getData;
 // export {
 //   twitter,
 //   getMyFollowings
-// };
+// };*/
