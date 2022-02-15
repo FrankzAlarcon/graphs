@@ -5,8 +5,8 @@ async function getDataAPI() {
   const URL = 'https://api.twitter.com/2/users/4865683485/following';
   const oauth = OAuth({
     consumer: {
-      key: 'eukrhMeOtHiGlpxzkzMaOUz9b',
-      secret: 'W18F3RDZAb4VLGa7JXIhIFNQfz3HN4LR9IgD80jLniYxj6BYqO'
+      key: 'e9b',
+      secret: 'O'
     },
     signature_method: 'HMAC-SHA1',
     hash_function(base_string, key) {
@@ -14,8 +14,8 @@ async function getDataAPI() {
     }
   });
   const token = {
-    key: '4865683485-OxjXay7efuS8rtImSZLSv4ocZqRUnCN4QEYq8bl',
-    secret: '4RCc6jzLE9KksMJRS7eHwtdZY6lfwq0doGYlC2VMlqnXk'
+    key: '4865ZLSv8bl',
+    secret: '4RCMlqnXk'
   }
   const requestData = {
     url: URL,

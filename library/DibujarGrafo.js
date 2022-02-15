@@ -41,11 +41,14 @@ class DibujarGrafo {
       }
     });
   }
-  addNode(node) {
-    this.graph.add({group: 'nodes',data: {id: node.username, name: node.name}, position: {x: Math.random()*600, y: Math.random()*400}})
+  dibujarNodo(nodo) {
+    this.graph.add({group: 'nodes',data: {id: nodo.username, name: nodo.name}, position: {x: Math.random()*600, y: Math.random()*400}})
   }
-  addEdge(sourceNode, targetNode) {
-    this.graph.add({group: 'edges', data: {id:`${sourceNode.username}-${targetNode.username}`, source: sourceNode.username, target: targetNode.username, label: targetNode.public_metrics.followers_count}})
+  dibujarArista(origen, destino) {
+    this.graph.add({group: 'edges', data: {id:`${origen.username}-${destino.username}`, source: origen.username, target: destino.username, label: destino.public_metrics.followers_count}})
+  }
+  dibujarAristaConPeso(origen, destino, peso) {
+    this.graph.add({group: 'edges', data: {id:`${origen.username}-${destino.username}`, source: origen.username, target: destino.username, label: peso}})
   }
 }
 

@@ -6,6 +6,9 @@ class Grafo {
   constructor() {
     this.#nodos = { };
   }
+  get getNodos() {
+    return this.#nodos
+  }
   agregarNodo(valor){
     this.#nodos[JSON.stringify(valor)] = new Nodo(valor);
   }

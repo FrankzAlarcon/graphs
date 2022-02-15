@@ -131,20 +131,25 @@ const owner = {
 document.addEventListener('DOMContentLoaded',  /*async */() => {
   // await getSeguidos();
   initApp()
-  fillNodes(misSeguidos);
-  fillEdgesAuto();
+  llenarNodos(misSeguidos);
+  llenarAristasAuto();
 })
 
 function initApp() {
+  //Añade los eventos en botones necesarios para que funciona la app
   const botonRutaMasCorta = document.querySelector('.ruta-mas-corta');
   botonRutaMasCorta.addEventListener('click', () => {
     const data =   rutaMasCorta(owner, misSeguidos[0])
-    console.log(data)
-    fillEdges(data)
-  })
+    llenarAristas(data)
+  });
+  const nodosSeleccionados = []//TODO: hacer que se seleecionen dos nodos para la Ruta mas corta
+  dibujoGrafo.graph.on('tap','node', (event) => {
+    console.log(event.target.data())
+  });
 }
 
 async function getSeguidos() {
+  //hace fetch para obtener los datos
   const misSeguidosContainer = document.querySelector('.seguidos')
   misSeguidos = await fetch('http://localhost:3100/get')
   .then(response => response.json())
@@ -161,51 +166,63 @@ async function getSeguidos() {
   })
 }
 
-function fillNodes(listaNodos){
-  dibujoGrafo.addNode(owner)
+function llenarNodos(listaNodos){
+  //Añade los nodos al grafo y los dibuja
+  dibujoGrafo.dibujarNodo(owner)
   grafo.agregarNodo(owner)
   listaNodos.forEach(user => {
-    dibujoGrafo.addNode(user)
+    dibujoGrafo.dibujarNodo(user)
     grafo.agregarNodo(user)
   })
 }
-function fillEdgesAuto() {
-  misSeguidos.forEach(user => {
-    try {
-      dibujoGrafo.addEdge(owner, user)
-      grafo.agregarAristaNoDirigida(owner, user, user.public_metrics.followers_count)
-    } catch (error) {
-      console.log(error)
-    }
-  })
-  dibujoGrafo.addEdge(misSeguidos[0], misSeguidos[1])
-  dibujoGrafo.addEdge(misSeguidos[0], misSeguidos[2])
-  dibujoGrafo.addEdge(misSeguidos[0], misSeguidos[3])
-  dibujoGrafo.addEdge(misSeguidos[0], misSeguidos[4])
-  dibujoGrafo.addEdge(misSeguidos[0], misSeguidos[5])
+function llenarAristasAuto() {
+  //genera las aristas no dirigidas
+  try {
+    misSeguidos.forEach(user => {
+        dibujoGrafo.dibujarArista(owner, user)
+        grafo.agregarAristaNoDirigida(owner, user, user.public_metrics.followers_count)
+      })
+  } catch (error) {
+    console.log(error)
+  }
+  //TODO: generar aristas aleatorias 2 o 3 por nodo
+  dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[1])
+  dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[2])
+  dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[3])
+  dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[4])
+  dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[5])
 
   grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[1], misSeguidos[1].public_metrics.followers_count)
   grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[2], misSeguidos[2].public_metrics.followers_count)
   grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[3], misSeguidos[3].public_metrics.followers_count)
   grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[4], misSeguidos[4].public_metrics.followers_count)
   grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[5], misSeguidos[5].public_metrics.followers_count)
-  console.log(grafo)
-  // dibujoGrafo.addEdge(misSeguidos[5], misSeguidos[0])
+  // dibujoGrafo.dibujarArista(misSeguidos[5], misSeguidos[0])
 }
-function fillEdges(lista_edges) {
+function llenarAristas(keysRutaCorta) {
   dibujoGrafo =  new DibujarGrafo();
-  const lista = lista_edges.map(user => JSON.parse(user))
-  console.log(lista)
-  lista.forEach(user => {
-    dibujoGrafo.addNode(user)//todo: devolver como obj en ruta mas corta
+
+  keysRutaCorta.forEach(user => {
+    /**Añade la info de los nodos de la ruta mas corta para que se grafique */
+    dibujoGrafo.dibujarNodo(user);
   });
-  for(let i = 1; i < lista.length; i++) {
-    dibujoGrafo.addEdge(lista[i-1], lista[i])
+  /**Obtiene los nodos desde el grafo general */
+  const nodosGrafo = Object.values(grafo.getNodos);
+
+  const datosAgraficar = [];
+  keysRutaCorta.forEach(nodo => {
+    //obtiene los datos necesarios para la graficación correcta de aristas (username, peso)
+    datosAgraficar.push(nodosGrafo.find(node => node.valor.id === nodo.id))
+  })
+
+  for(let i = 1; i < datosAgraficar.length; i++) {
+    //Añade las aristas para que se dibujen
+    dibujoGrafo.dibujarAristaConPeso(datosAgraficar[i-1].valor, datosAgraficar[i].valor, datosAgraficar[i].distancia - datosAgraficar[i-1].distancia)
   }
 
 }
 function rutaMasCorta(origen, destino) {
-  const data = grafo.bellmanFordGrafo(origen, destino)
-  // console.log(data)
-  return data[0];
+  //Retorna un string con las keys de los nodos y se almacena en data
+  const data = grafo.bellmanFordGrafo(origen, destino);
+  return data[0].map(user => JSON.parse(user));//transforma las keys a objetos
 }
