@@ -1,5 +1,18 @@
 import DibujarGrafo from './library/DibujarGrafo.js';
 import Grafo from './library/Grafo.js';
+/**
+ * 
+ * Todo: generar aristas random (2 o 3 por nodo) excepto el primero.
+ * Todo: Crear el algoritmo para arbol de expasion minimo en la misma clase grafo.
+ * Todo: Implementar el arbol de expansio minimo dinamico.
+ * Todo: Crear dos canvas, uno es el grafo y el otro para mostrar el resultado.
+ * Todo: Consultar como subir backend y frontend a un server, creo que funcionaria en "Heroku".
+ * Todo: Realizar en el backend una peticion para obtener los datos de ususraio ingresando el username.
+ * Todo: Arreglar los estilos para mostrar los 2 canvas y agregar botones para arbol de expansion minimo.
+ * 
+ */
+
+
 
 let dibujoGrafo = new DibujarGrafo();
 const nodosParaRutaMasCorta = [];
@@ -117,6 +130,7 @@ let misSeguidos = [
     }
   }
 ];
+
 const owner = {
   username: "KunAguero",
   id: "12345678",
@@ -128,7 +142,7 @@ const owner = {
   },
   name: "Kun Aguero"
 }
-// misSeguidos.push(owner)//Todo: arreglar bug owner, asignar el owner aqui y borrar en las demas
+// misSeguidos.push(owner)
 // let misSeguidos = []
 document.addEventListener('DOMContentLoaded',  /*async */() => {
   // await getSeguidos();
@@ -152,9 +166,10 @@ function initApp() {
   const dibujarNodosSeleccionados = []
   dibujoGrafo.graph.on('tap','node', (event) => {
     const target =event.target;
+    const nodos = Object.values(grafo.getNodos)
     if(dibujarNodosSeleccionados.length === 0) {
       dibujarNodosSeleccionados.push(target);
-      nodosParaRutaMasCorta.push(misSeguidos.find(user => user.username === target.data().id));
+      nodosParaRutaMasCorta.push(nodos.find(user => user.valor.username === target.data().id).valor);
       target.style({'background-color': '#ff6d53', 'border-color': 'black'});
     } else {
       if(dibujarNodosSeleccionados[0].data().id === target.data().id) {
@@ -170,7 +185,7 @@ function initApp() {
         return; 
       } else {
         dibujarNodosSeleccionados.push(target);
-        nodosParaRutaMasCorta.push(misSeguidos.find(user => user.username === target.data().id));
+        nodosParaRutaMasCorta.push(nodos.find(user => user.valor.username === target.data().id).valor);
         if(dibujarNodosSeleccionados.length > 2){
           dibujarNodosSeleccionados[0].style({'background-color': '#11aaff', 'border-color': '#88aaff'});
           dibujarNodosSeleccionados.shift();
@@ -219,7 +234,6 @@ function llenarAristasAuto() {
   } catch (error) {
     console.log(error)
   }
-  //TODO: generar aristas aleatorias 2 o 3 por nodo
   dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[1])
   dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[2])
   dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[3])
