@@ -1,8 +1,8 @@
 # graphs
 Para ejecutar el proyecto, en la terminal:
-Hacer clone al proyecto usando: `git clone "url"`
-Instalar las dependencias del proyecto con el comando: `npm install`
-Para levantar el servidor de desarrollo ejecutar: `npm run dev`
+Hacer clone al proyecto usando: `git clone "url"`.
+Instalar las dependencias del proyecto con el comando: `npm install`.
+Para levantar el servidor de desarrollo ejecutar: `npm run dev`.
 
 ------------
 
