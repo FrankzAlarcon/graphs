@@ -82,3 +82,6 @@ a:hover, a:focus {
 .ruta-mas-corta:hover {
   box-shadow: 0px 0 5px 0 #a2ebbe;
 }
+h2 {
+  color: azure;
+}
