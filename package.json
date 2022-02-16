@@ -11,11 +11,8 @@
     "vite": "^2.8.0"
   },
   "dependencies": {
-    "crypto-js": "^4.1.1",
     "cytoscape": "^3.21.0",
-    "cytoscape-edgehandles": "^4.0.1",
-    "oauth-1.0a": "^2.2.6",
-    "twit": "^2.2.11"
+    "cytoscape-edgehandles": "^4.0.1"
   },
   "type": "module"
 }

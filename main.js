@@ -2,6 +2,7 @@ import DibujarGrafo from './library/DibujarGrafo.js';
 import Grafo from './library/Grafo.js';
 
 let dibujoGrafo = new DibujarGrafo();
+const nodosParaRutaMasCorta = [];
 const grafo = new Grafo();
 
 let misSeguidos = [
@@ -127,6 +128,7 @@ const owner = {
   },
   name: "Kun Aguero"
 }
+// misSeguidos.push(owner)//Todo: arreglar bug owner, asignar el owner aqui y borrar en las demas
 // let misSeguidos = []
 document.addEventListener('DOMContentLoaded',  /*async */() => {
   // await getSeguidos();
@@ -139,12 +141,44 @@ function initApp() {
   //Añade los eventos en botones necesarios para que funciona la app
   const botonRutaMasCorta = document.querySelector('.ruta-mas-corta');
   botonRutaMasCorta.addEventListener('click', () => {
-    const data =   rutaMasCorta(owner, misSeguidos[0])
-    llenarAristas(data)
+    if(nodosParaRutaMasCorta.length === 2) {
+      const data =   rutaMasCorta(nodosParaRutaMasCorta[0], nodosParaRutaMasCorta[1]);
+      nodosParaRutaMasCorta.length = 0
+      llenarAristas(data)
+    } else {
+      console.log('Se deben seleccionar 2 nodos')
+    }
   });
-  const nodosSeleccionados = []//TODO: hacer que se seleecionen dos nodos para la Ruta mas corta
+  const dibujarNodosSeleccionados = []
   dibujoGrafo.graph.on('tap','node', (event) => {
-    console.log(event.target.data())
+    const target =event.target;
+    if(dibujarNodosSeleccionados.length === 0) {
+      dibujarNodosSeleccionados.push(target);
+      nodosParaRutaMasCorta.push(misSeguidos.find(user => user.username === target.data().id));
+      target.style({'background-color': '#ff6d53', 'border-color': 'black'});
+    } else {
+      if(dibujarNodosSeleccionados[0].data().id === target.data().id) {
+        dibujarNodosSeleccionados[0].style({'background-color': '#11aaff', 'border-color': '#88aaff'});
+        dibujarNodosSeleccionados.shift();
+        nodosParaRutaMasCorta.shift();
+        return;    
+      } 
+      if( dibujarNodosSeleccionados[1]?.data().id === target.data().id) {
+        dibujarNodosSeleccionados[1].style({'background-color': '#11aaff', 'border-color': '#88aaff'});
+        dibujarNodosSeleccionados.pop();
+        nodosParaRutaMasCorta.pop();
+        return; 
+      } else {
+        dibujarNodosSeleccionados.push(target);
+        nodosParaRutaMasCorta.push(misSeguidos.find(user => user.username === target.data().id));
+        if(dibujarNodosSeleccionados.length > 2){
+          dibujarNodosSeleccionados[0].style({'background-color': '#11aaff', 'border-color': '#88aaff'});
+          dibujarNodosSeleccionados.shift();
+          nodosParaRutaMasCorta.shift();
+        }
+        target.style({'background-color': '#ff6d53', 'border-color': 'black'});        
+      }
+    }
   });
 }
 
