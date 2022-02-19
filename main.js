@@ -3,7 +3,7 @@ import Grafo from './library/Grafo.js';
 /**
  * 
  * Todo: generar aristas random (2 o 3 por nodo) excepto el primero.
- * Todo: Crear el algoritmo para arbol de expasion minimo en la misma clase grafo.
+ * Todo: Crear el algoritmo para arbol de expasion minimo en la misma clase grafo. TERMINADO
  * Todo: Implementar el arbol de expansio minimo dinamico.
  * Todo: Crear dos canvas, uno es el grafo y el otro para mostrar el resultado.
  * Todo: Consultar como subir backend y frontend a un server, creo que funcionaria en "Heroku".
@@ -246,6 +246,8 @@ function llenarAristasAuto() {
   grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[4], misSeguidos[4].public_metrics.followers_count)
   grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[5], misSeguidos[5].public_metrics.followers_count)
   // dibujoGrafo.dibujarArista(misSeguidos[5], misSeguidos[0])
+  console.log(grafo.matrizAdyacencia())
+  console.log(grafo.prim(owner))
 }
 function llenarAristas(keysRutaCorta) {
   dibujoGrafo =  new DibujarGrafo();

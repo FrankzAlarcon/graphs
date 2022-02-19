@@ -28,6 +28,25 @@ function grafo() {
   g.agregarAristaNoDirigida('H','T',8)
   g.agregarAristaNoDirigida('H','I',3)
   g.agregarAristaNoDirigida('I','T',4)
-  console.log(g.bellmanFordGrafo('O', 'T'))
+  // console.log(g.matrizAdyacencia())
+  console.log(g.prim('A'))
 }
-grafo()
+function grafo2() {
+  let g = new Grafo()
+  let nodos = ["EPN","PUCE","UC","UTE","CNT"]
+  for(let nodo of nodos){
+    g.agregarNodo(nodo)
+  }
+  g.agregarAristaNoDirigida("CNT","EPN",3)
+  g.agregarAristaNoDirigida("CNT","PUCE",3)
+  g.agregarAristaNoDirigida("CNT","UC",5)
+  g.agregarAristaNoDirigida("CNT","UTE",4)
+  g.agregarAristaNoDirigida("PUCE","EPN",5)
+  g.agregarAristaNoDirigida("PUCE","UTE",5)
+  g.agregarAristaNoDirigida("PUCE","UC",7)
+  g.agregarAristaNoDirigida("UTE","UC",7)
+  g.agregarAristaNoDirigida("EPN","UC",5)
+  // console.log(g.matrizAdyacencia())
+  console.log(g.prim("CNT"))
+}
+grafo2()

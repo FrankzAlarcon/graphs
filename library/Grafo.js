@@ -9,6 +9,9 @@ class Grafo {
   get getNodos() {
     return this.#nodos
   }
+  getNodoPorKey(keyNodo) {
+    return Object.entries(this.#nodos).find(([key, value]) => key === JSON.stringify(keyNodo) ? value:null);
+  }
   agregarNodo(valor){
     this.#nodos[JSON.stringify(valor)] = new Nodo(valor);
   }
@@ -25,7 +28,7 @@ class Grafo {
     this.#nodos[JSON.stringify(origen)].agregarVecino(destino, peso);
     this.#nodos[JSON.stringify(destino)].agregarVecino(origen, peso);
   }
-
+  /**Agrega una arista dirigida */
   agregarAristaDirigida(origen, destino, peso) {
     //Si el origen y destino existen en el grafo
     if(!Object.keys(this.#nodos).includes(JSON.stringify(origen))) {
@@ -35,6 +38,30 @@ class Grafo {
       return new Error('No existe el nodo' + destino);
     }
     this.#nodos[JSON.stringify(origen)].agregarVecino(destino, peso);
+  }
+  /**Imprime la matriz de adyacencia del Grafo */
+  matrizAdyacencia() {
+    const matriz = [];
+    let filas = [];
+    if(Object.keys(this.#nodos).length !== 0) {
+      let valoresNodos = Object.values(this.#nodos);
+      // console.log(valoresNodos)
+      for(let fila of valoresNodos) {
+        for(let columna of valoresNodos) {
+          let ids = fila.vecinos.map(vecino => JSON.stringify(vecino[0]))
+          // console.log(ids.includes(columna.valor))
+          if(ids.includes(JSON.stringify(columna.valor))) {
+            let index = ids.findIndex(id => JSON.stringify(columna.valor) === id);
+            filas.push(fila.vecinos[index][1]);
+          } else {
+            filas.push(Number.POSITIVE_INFINITY);
+          }
+        }
+        matriz.push(filas)
+        filas = []
+      }
+    }
+    return matriz;
   }
 
   #minimo(lista) {
@@ -112,8 +139,43 @@ class Grafo {
       this.#bellmanFord(origen);
       return this.#camino(origen, destino);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
+  }
+  /**Calcula el arbol de expansion minimo desde un nodo */
+  prim(nodoInicial) {
+    const matriz = this.matrizAdyacencia();
+    const numNodos = Object.keys(this.#nodos).length;
+    const posicionNodoInicial = Object.keys(this.#nodos).findIndex(key => key === JSON.stringify(nodoInicial));
+    let visitados = [];//Almacena nodos visitados o no (0 y 1)
+    while(visitados.length !== numNodos) {
+      visitados.push(0);
+    }
+    visitados[posicionNodoInicial] = 1;
+    const aristasArbol = []; //Almacena aristas del arbol
+    
+    for(let i = 0; i < numNodos - 1; i++) {
+      let minimo = Number.POSITIVE_INFINITY;
+      let agregarVertice = 0;
+      let arista =[];
+      for(let j = 0; j < numNodos; j++) {
+        // console.log(visitados[j])
+        if(visitados[j] === 1) {
+          for(let k = 0; k < numNodos; k++) {
+            if(visitados[k] === 0 && matriz[j][k] < minimo) {
+              agregarVertice = k;
+              let inicio = Object.keys(this.#nodos)[j];
+              let destino = Object.keys(this.#nodos)[k];
+              arista = [inicio, destino];
+              minimo = matriz[j][k]
+            }
+          }
+        }
+      }
+      visitados[agregarVertice] = 1;
+      aristasArbol.push(arista)
+    }
+    return aristasArbol;
   }
 }
 export default Grafo;
