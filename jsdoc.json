@@ -1,7 +1,7 @@
 {
     "plugins": [],
     "source": {
-        "include": "(library)",
+        "include": ["library"],
         "includePattern": ".js$",
         "excludePattern": "(node_modules|docs|)"
 
