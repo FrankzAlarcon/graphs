@@ -10,7 +10,7 @@
         "monospaceLinks": false
     },
     "opts": {
-      "recurse": true,
+      "recurse": "true",
       "destination": "./doc"
     }
 }
