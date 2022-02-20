@@ -11,33 +11,6 @@ class DibujarGrafo {
         cols: 2
       },
 
-      // style: cytoscape.stylesheet()
-      // .selector('edge')
-      // .css({
-      //       'width': 1,
-      //       'line-color': '#000',
-      //       'target-arrow-color': '#e60',
-      //       'target-arrow-shape': 'triangle',
-      //       'label': 'data(label)',
-      //       'font-size': '14px',
-      //       'color': '#000'
-      // })
-      // .selector('node')
-      // .css({
-      //       'background-color': '#11aaff',
-      //       "border-style": 'solid',
-      //       "border-width": '2px',
-      //       "border-color": '#88aaff',
-      //       'label': 'data(id)',        
-      // })
-      // .selector(':selected')
-      // .css({
-      //   'background-color': 'black',
-      //   'line-color': 'black',
-      //   'target-arrow-color': 'black',
-      //   'source-arrow-color': 'black',
-      //   'text-outline-color': 'black'
-      // }),
 
 
       style: [
@@ -72,6 +45,7 @@ class DibujarGrafo {
     });
   }
   dibujarNodo(nodo) {
+  /***Paremetros */
     this.graph.add({group: 'nodes',data: {id: nodo.username, name: nodo.name}, position: {x: Math.random()*600, y: Math.random()*400}})
   }
   dibujarArista(origen, destino) {

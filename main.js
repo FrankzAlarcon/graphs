@@ -239,7 +239,7 @@ function llenarAristasAuto() {
   dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[3])
   dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[4])
   dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[5])
-
+/* Mis seguidos = 10 Nodos */
   grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[1], misSeguidos[1].public_metrics.followers_count)
   grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[2], misSeguidos[2].public_metrics.followers_count)
   grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[3], misSeguidos[3].public_metrics.followers_count)
