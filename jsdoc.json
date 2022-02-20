@@ -3,14 +3,15 @@
     "source": {
         "include": ["library"],
         "includePattern": ".js$",
-        "excludePattern":"(node_modules|docs|)"
+        "excludePattern": "(node_modules|docs)"
     },
     "templates": {
-        "cleverLinks": false,
-        "monospaceLinks": false
+    "cleverLinks": true,
+    "monospaceLinks": true
     },
     "opts": {
-      "recurse": "true",
-      "destination": "./doc"
+        "recurse": true,
+        "destination": "./docs"
+
     }
 }
