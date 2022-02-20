@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "cytoscape": "^3.21.0",
-    "cytoscape-edgehandles": "^4.0.1"
+    "cytoscape-edgehandles": "^4.0.1",
+    "jsdoc": "^3.6.10"
   },
   "type": "module"
 }

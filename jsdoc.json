@@ -1,0 +1,8 @@
+{
+    "plugins": [],
+    "source": {
+        "include": ["library"]
+        "includePattern": ".js$",
+        
+    }
+}
