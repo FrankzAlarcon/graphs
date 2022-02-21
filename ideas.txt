@@ -1,6 +1,5 @@
 //Lo que se necesita para iniciar
-- instalar node
-- 
+-Crear en npm un paquete de software
 
 
 //obetner los usuarios y edges con random
