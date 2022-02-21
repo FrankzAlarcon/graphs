@@ -1,5 +1,5 @@
-import DibujarGrafo from './library/DibujarGrafo.js';
-import Grafo from './library/Grafo.js';
+import DibujarGrafo from '../library/DibujarGrafo.js';
+import Grafo from '../library/Grafo.js';
 /* Todo: generar aristas random (2 o 3 por nodo) excepto el primero.
  Todo: Crear el algoritmo para arbol de expasion minimo en la misma clase grafo. TERMINADO
  Todo: Implementar el arbol de expansio minimo dinamico.

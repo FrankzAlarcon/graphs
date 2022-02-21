@@ -1,5 +1,5 @@
 //Lo que se necesita para iniciar
--Crear en npm un paquete de software
+-Crear en npm un paquete para la libreria
 
 
 //obetner los usuarios y edges con random
