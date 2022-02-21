@@ -1,9 +1,9 @@
 import cytoscape from 'cytoscape';
 
 class DibujarGrafo {
-  constructor() {
+  constructor(id) {
     this.graph = cytoscape({
-      container: document.getElementById('graph'),
+      container: document.getElementById(id),
     
       layout: {
         name: 'grid',
@@ -46,7 +46,7 @@ class DibujarGrafo {
   }
   dibujarNodo(nodo) {
   /***Paremetros */
-    this.graph.add({group: 'nodes',data: {id: nodo.username, name: nodo.name}, position: {x: Math.random()*600, y: Math.random()*400}})
+    this.graph.add({group: 'nodes',data: {id: nodo.username, name: nodo.name}, position: {x: Math.random()*600 + 10, y: Math.random()*400}})
   }
   dibujarArista(origen, destino) {
     this.graph.add({group: 'edges', data: {id:`${origen.username}-${destino.username}`, source: origen.username, target: destino.username, label: destino.public_metrics.followers_count}})

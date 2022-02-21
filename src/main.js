@@ -1,17 +1,18 @@
 import DibujarGrafo from '../library/DibujarGrafo.js';
 import Grafo from '../library/Grafo.js';
-/* Todo: generar aristas random (2 o 3 por nodo) excepto el primero.
- Todo: Crear el algoritmo para arbol de expasion minimo en la misma clase grafo. TERMINADO
- Todo: Implementar el arbol de expansio minimo dinamico.
- Todo: Crear dos canvas, uno es el grafo y el otro para mostrar el resultado.
- Todo: Consultar como subir backend y frontend a un server, creo que funcionaria en "Heroku".
- Todo: Realizar en el backend una peticion para obtener los datos de ususraio ingresando el username.
- Todo: Arreglar los estilos para mostrar los 2 canvas y agregar botones para arbol de expansion minimo. 
+/* 
+  Todo: generar aristas random (2 o 3 por nodo) excepto el primero.
+  Todo: Crear el algoritmo para arbol de expasion minimo en la misma clase grafo. TERMINADO
+  Todo: Implementar el arbol de expansio minimo dinamico.
+  Todo: Crear dos canvas, uno es el grafo y el otro para mostrar el resultado. TERMINADO
+  Todo: Consultar como subir backend y frontend a un server, creo que funcionaria en "Heroku".
+  Todo: Realizar en el backend una peticion para obtener los datos de ususraio ingresando el username.
+  Todo: Arreglar los estilos para mostrar los 2 canvas y agregar botones para arbol de expansion minimo. 
  */
 
 
 
-let dibujoGrafo = new DibujarGrafo();
+let dibujoGrafo = new DibujarGrafo('graph');
 const nodosParaRutaMasCorta = [];
 const grafo = new Grafo();
 
@@ -160,6 +161,13 @@ function initApp() {
       console.log('Se deben seleccionar 2 nodos')
     }
   });
+
+  const botonArbolExpMin = document.querySelector('.arbol-minimo-prim');
+  botonArbolExpMin.addEventListener('click', () => {
+    console.log(grafo.matrizAdyacencia())
+    console.log(grafo.prim(owner))
+  });
+
   const dibujarNodosSeleccionados = []
   dibujoGrafo.graph.on('tap','node', (event) => {
     const target =event.target;
@@ -243,15 +251,13 @@ function llenarAristasAuto() {
   grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[4], misSeguidos[4].public_metrics.followers_count)
   grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[5], misSeguidos[5].public_metrics.followers_count)
   // dibujoGrafo.dibujarArista(misSeguidos[5], misSeguidos[0])
-  console.log(grafo.matrizAdyacencia())
-  console.log(grafo.prim(owner))
 }
 function llenarAristas(keysRutaCorta) {
-  dibujoGrafo =  new DibujarGrafo();
+  const dibujoGrafoRMC =  new DibujarGrafo('result');
 
   keysRutaCorta.forEach(user => {
     /**Añade la info de los nodos de la ruta mas corta para que se grafique */
-    dibujoGrafo.dibujarNodo(user);
+    dibujoGrafoRMC.dibujarNodo(user);
   });
   /**Obtiene los nodos desde el grafo general */
   const nodosGrafo = Object.values(grafo.getNodos);
@@ -264,7 +270,7 @@ function llenarAristas(keysRutaCorta) {
 
   for(let i = 1; i < datosAgraficar.length; i++) {
     //Añade las aristas para que se dibujen
-    dibujoGrafo.dibujarAristaConPeso(datosAgraficar[i-1].valor, datosAgraficar[i].valor, datosAgraficar[i].distancia - datosAgraficar[i-1].distancia)
+    dibujoGrafoRMC.dibujarAristaConPeso(datosAgraficar[i-1].valor, datosAgraficar[i].valor, datosAgraficar[i].distancia - datosAgraficar[i-1].distancia)
   }
 
 }
