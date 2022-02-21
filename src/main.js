@@ -1,15 +1,12 @@
 import DibujarGrafo from './library/DibujarGrafo.js';
 import Grafo from './library/Grafo.js';
-/**
- * 
- * Todo: generar aristas random (2 o 3 por nodo) excepto el primero.
- * Todo: Crear el algoritmo para arbol de expasion minimo en la misma clase grafo. TERMINADO
- * Todo: Implementar el arbol de expansio minimo dinamico.
- * Todo: Crear dos canvas, uno es el grafo y el otro para mostrar el resultado.
- * Todo: Consultar como subir backend y frontend a un server, creo que funcionaria en "Heroku".
- * Todo: Realizar en el backend una peticion para obtener los datos de ususraio ingresando el username.
- * Todo: Arreglar los estilos para mostrar los 2 canvas y agregar botones para arbol de expansion minimo.
- * 
+/* Todo: generar aristas random (2 o 3 por nodo) excepto el primero.
+ Todo: Crear el algoritmo para arbol de expasion minimo en la misma clase grafo. TERMINADO
+ Todo: Implementar el arbol de expansio minimo dinamico.
+ Todo: Crear dos canvas, uno es el grafo y el otro para mostrar el resultado.
+ Todo: Consultar como subir backend y frontend a un server, creo que funcionaria en "Heroku".
+ Todo: Realizar en el backend una peticion para obtener los datos de ususraio ingresando el username.
+ Todo: Arreglar los estilos para mostrar los 2 canvas y agregar botones para arbol de expansion minimo. 
  */
 
 

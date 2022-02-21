@@ -1,24 +1,22 @@
+//@ts-check
+
 /**
-* Representa un Nodo
+* Clase que representa un Nodo
 @Atributos {
   valor, vecinos, visitado, padre, distancia}
 */
 class Nodo {
-  /**@Parametros {El valor o etiqueta del nodo} */
+
+  /**
+   * @param {Object} valor Identificador o Dato del nodo
+   */
   constructor(valor) {
-    
     this.valor = valor;
-    /**
-    *Propiedad que almacena los nodos vecinos del nodo.
-    * @Tipo {arrays}*/
     this.vecinos = [];
-    /**
-    *Propiedad que determina si un nodo fue o no visitado.
-    * @Tipo {boolean} @PorDefecto {false} */
     this.visitado = false;
     /**
     *Propiedad que almacena el nodo padre
-    * @Tipo @PorDefecto {null} */
+    * @type {object} @default {null} */
     this.padre = null;
     /**
     *Propiedad que almacena la distancia del nodo.
