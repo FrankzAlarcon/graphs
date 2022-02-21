@@ -14,13 +14,7 @@ class Nodo {
     this.valor = valor;
     this.vecinos = [];
     this.visitado = false;
-    /**
-    *Propiedad que almacena el nodo padre
-    * @type {object} @default {null} */
     this.padre = null;
-    /**
-    *Propiedad que almacena la distancia del nodo.
-    * @Tipo {array} @PorDefecto {Number.POSITIVE_INFINITY}*/
     this.distancia = Number.POSITIVE_INFINITY;
   }
   /**Agrega un nodo a la lista de adyacencia 
