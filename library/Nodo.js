@@ -18,9 +18,9 @@ class Nodo {
     this.distancia = Number.POSITIVE_INFINITY;
   }
   /**Agrega un nodo a la lista de adyacencia 
-   * @param destino Nodo a conectar
-   * @param peso Peso de la arista
-   * @returns None
+   * @param {object} destino Nodo siguiente a conectar
+   * @param {number} peso Peso de la arista
+   * @returns {void}
   */
   agregarVecino(destino, peso) {
     //Si el destino no está en la lista de adyacencia
