@@ -154,11 +154,14 @@ function initApp() {
   const botonRutaMasCorta = document.querySelector('.ruta-mas-corta');
   botonRutaMasCorta.addEventListener('click', () => {
     if(nodosParaRutaMasCorta.length === 2) {
+      console.log('nodos para RMC',nodosParaRutaMasCorta)
       const data =   rutaMasCorta(nodosParaRutaMasCorta[0], nodosParaRutaMasCorta[1]);
-      nodosParaRutaMasCorta.length = 0
-      llenarAristas(data)
+      nodosParaRutaMasCorta.length = 0;
+      dibujarNodosSeleccionados.length = 0;
+      pintarAzul();
+      llenarAristas(data);
     } else {
-      console.log('Se deben seleccionar 2 nodos')
+      console.log('Se deben seleccionar 2 nodos');
     }
   });
 
@@ -199,9 +202,16 @@ function initApp() {
         target.style({'background-color': '#ff6d53', 'border-color': 'black'});        
       }
     }
+    // console.log('dibujar',dibujarNodosSeleccionados);
+    // console.log('nodos',nodosParaRutaMasCorta)
   });
 }
 
+function pintarAzul() {
+  dibujoGrafo.graph.elements().forEach(element => {
+    element.style({'background-color': '#11aaff', 'border-color': '#88aaff'});
+  })
+}
 async function getSeguidos() {
   //hace fetch para obtener los datos
   const misSeguidosContainer = document.querySelector('.seguidos')
@@ -277,5 +287,6 @@ function llenarAristas(keysRutaCorta) {
 function rutaMasCorta(origen, destino) {
   //Retorna un string con las keys de los nodos y se almacena en data
   const data = grafo.bellmanFordGrafo(origen, destino);
+  console.log('resultado bellman ford',data)
   return data[0].map(user => JSON.parse(user));//transforma las keys a objetos
 }

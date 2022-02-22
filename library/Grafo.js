@@ -85,7 +85,7 @@ class Grafo {
     actual = JSON.stringify(actual)
     while(actual !== null) {
       camino.unshift(actual);
-      console.log(actual)
+      console.log('camino',actual)
       actual = this.#nodos[actual].padre;
     }
     return [camino, this.#nodos[JSON.stringify(destino)].distancia];
@@ -94,21 +94,23 @@ class Grafo {
     //Verificar que el vertice existe en el grafo
     if(Object.keys(this.#nodos).includes(JSON.stringify(origen))) {
       //Asignar 0 a nodo inicial
-      this.#nodos[JSON.stringify(origen)].distancia = 0;
+      this.#nodos[JSON.stringify(origen)].distancia = 0;  
       //Se crea una copia del origen
       let actual = origen;
       let noVisitados = []
       for(let nodo of Object.keys(this.#nodos)) {
         if(nodo !== JSON.stringify(origen)) {
           //Poner inf a todos lo vertices excepto el inicial
-          this.#nodos[nodo].distancia = Number.POSITIVE_INFINITY;
+          this.#nodos[nodo].distancia = Number.POSITIVE_INFINITY;        
         }
         this.#nodos[nodo].padre = null; //Asigna un predecesor nulo
+        this.#nodos[nodo].visitado = false;
         noVisitados.push(this.#nodos[nodo])//Poner todos los vertices no visitados
       }
       actual = JSON.stringify(actual)
       while(noVisitados.length > 0) {
         //Mientras existan nodos no visitados
+        console.log(this.#nodos[actual].vecinos)
         for(let vecino of this.#nodos[actual].vecinos) {
           //Por cada vecino en el nodo origen
           if(this.#nodos[JSON.stringify(vecino[0])].visitado === false) {
@@ -119,6 +121,7 @@ class Grafo {
               this.#nodos[JSON.stringify(vecino[0])].distancia = this.#nodos[actual].distancia + vecino[1];
               //Establecer como padre del nodo vecino al nodo actual
               this.#nodos[JSON.stringify(vecino[0])].padre = actual;
+              console.log('nueva distancia', this.#nodos[JSON.stringify(vecino[0])].distancia)
             }
           }
         }
@@ -137,6 +140,7 @@ class Grafo {
   bellmanFordGrafo(origen, destino){
     try {
       this.#bellmanFord(origen);
+      // console.log('despues bellmanF',this.#nodos)
       return this.#camino(origen, destino);
     } catch (error) {
       console.log(error);
