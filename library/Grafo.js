@@ -45,11 +45,9 @@ class Grafo {
     let filas = [];
     if(Object.keys(this.#nodos).length !== 0) {
       let valoresNodos = Object.values(this.#nodos);
-      // console.log(valoresNodos)
       for(let fila of valoresNodos) {
         for(let columna of valoresNodos) {
           let ids = fila.vecinos.map(vecino => JSON.stringify(vecino[0]))
-          // console.log(ids.includes(columna.valor))
           if(ids.includes(JSON.stringify(columna.valor))) {
             let index = ids.findIndex(id => JSON.stringify(columna.valor) === id);
             filas.push(fila.vecinos[index][1]);
@@ -110,7 +108,6 @@ class Grafo {
       actual = JSON.stringify(actual)
       while(noVisitados.length > 0) {
         //Mientras existan nodos no visitados
-        console.log(this.#nodos[actual].vecinos)
         for(let vecino of this.#nodos[actual].vecinos) {
           //Por cada vecino en el nodo origen
           if(this.#nodos[JSON.stringify(vecino[0])].visitado === false) {
@@ -121,16 +118,13 @@ class Grafo {
               this.#nodos[JSON.stringify(vecino[0])].distancia = this.#nodos[actual].distancia + vecino[1];
               //Establecer como padre del nodo vecino al nodo actual
               this.#nodos[JSON.stringify(vecino[0])].padre = actual;
-              console.log('nueva distancia', this.#nodos[JSON.stringify(vecino[0])].distancia)
             }
           }
         }
         //Establecer el vertice actual como visitado y removerlo de la lista de no visitados
         this.#nodos[actual].visitado = true;
         noVisitados = noVisitados.filter(nodo => JSON.stringify(nodo.valor) !== actual);
-        // console.log(noVisitados.length)
         actual = this.#minimo(noVisitados);
-        // console.log(actual)
       }
     } else {
       //Si no existe en el grafo
@@ -140,7 +134,6 @@ class Grafo {
   bellmanFordGrafo(origen, destino){
     try {
       this.#bellmanFord(origen);
-      // console.log('despues bellmanF',this.#nodos)
       return this.#camino(origen, destino);
     } catch (error) {
       console.log(error);
@@ -163,7 +156,6 @@ class Grafo {
       let agregarVertice = 0;
       let arista =[];
       for(let j = 0; j < numNodos; j++) {
-        // console.log(visitados[j])
         if(visitados[j] === 1) {
           for(let k = 0; k < numNodos; k++) {
             if(visitados[k] === 0 && matriz[j][k] < minimo) {

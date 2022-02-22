@@ -154,7 +154,6 @@ function initApp() {
   const botonRutaMasCorta = document.querySelector('.ruta-mas-corta');
   botonRutaMasCorta.addEventListener('click', () => {
     if(nodosParaRutaMasCorta.length === 2) {
-      console.log('nodos para RMC',nodosParaRutaMasCorta)
       const data =   rutaMasCorta(nodosParaRutaMasCorta[0], nodosParaRutaMasCorta[1]);
       nodosParaRutaMasCorta.length = 0;
       dibujarNodosSeleccionados.length = 0;
@@ -167,9 +166,14 @@ function initApp() {
 
   const botonArbolExpMin = document.querySelector('.arbol-minimo-prim');
   botonArbolExpMin.addEventListener('click', () => {
-    console.log(grafo.matrizAdyacencia())
-    console.log(grafo.prim(owner))
-  });
+    if(nodosParaRutaMasCorta.length === 1){
+    const resultados = arbolExpMin(nodosParaRutaMasCorta[0]);
+    nodosParaRutaMasCorta.length = 0;
+    dibujarNodosSeleccionados.length = 0;
+    pintarAzul();
+    llenarAristasPrim(resultados);
+    console.log('matriz adyacencia',grafo.matrizAdyacencia());
+  }});
 
   const dibujarNodosSeleccionados = []
   dibujoGrafo.graph.on('tap','node', (event) => {
@@ -202,8 +206,6 @@ function initApp() {
         target.style({'background-color': '#ff6d53', 'border-color': 'black'});        
       }
     }
-    // console.log('dibujar',dibujarNodosSeleccionados);
-    // console.log('nodos',nodosParaRutaMasCorta)
   });
 }
 
@@ -284,9 +286,53 @@ function llenarAristas(keysRutaCorta) {
   }
 
 }
+function llenarAristasPrim(keysPrim) {
+  const dibujoGrafoRMC =  new DibujarGrafo('result');
+  const keys = Object.keys(keysPrim);
+  keys.forEach(key => {
+    dibujoGrafoRMC.dibujarNodo(JSON.parse(key));
+  });
+  const datosAgraficar = {};
+  const nodosGrafo = Object.values(grafo.getNodos);
+  keys.forEach(key => {
+    const dato = nodosGrafo.find(nodo => nodo.valor.id === JSON.parse(key).id);
+    datosAgraficar[JSON.stringify(dato)] = [];
+    keysPrim[key].forEach(nodo => {
+      if(dato.vecinos.map(vecino => vecino[0].id).includes(nodo.id)){
+        datosAgraficar[JSON.stringify(dato)].push(dato.vecinos.find(vecino => vecino[0].id === nodo.id));
+      }
+    })
+  });
+  Object.keys(datosAgraficar).forEach(key => {
+    datosAgraficar[key].forEach(nodo => {
+      dibujoGrafoRMC.dibujarAristaConPeso(JSON.parse(key).valor, nodo[0], nodo[1]);
+    })
+  });
+}
 function rutaMasCorta(origen, destino) {
   //Retorna un string con las keys de los nodos y se almacena en data
   const data = grafo.bellmanFordGrafo(origen, destino);
-  console.log('resultado bellman ford',data)
   return data[0].map(user => JSON.parse(user));//transforma las keys a objetos
+}
+function arbolExpMin(origen) {
+  const resultados = grafo.prim(origen);
+  const resultadosJS = resultados.map(resultado => resultado.map(item => JSON.parse(item)));
+  const keysUnicas = {};
+  resultadosJS.forEach(resultado => {
+    //obtengo los nodos diferentes
+    if(!Object.keys(keysUnicas).find(key => resultado[0].username === JSON.parse(key).username)) {
+      keysUnicas[JSON.stringify(resultado[0])] = [];
+    }
+    if(!Object.keys(keysUnicas).find(key => resultado[1].username === JSON.parse(key).username)) {
+      keysUnicas[JSON.stringify(resultado[1])] = [];
+    }
+  });
+  Object.keys(keysUnicas).forEach(key => {
+    resultadosJS.forEach(resultado => {
+      if(resultado[0].username === JSON.parse(key).username){
+        keysUnicas[key].push(resultado[1]);
+      }
+    })
+  })
+  return keysUnicas;
 }
