@@ -90,9 +90,23 @@ input {
   border: none;
   outline: none;
   padding-left: .5rem;
+  font-family: 'krub';
+
+  /* margin-left: 1rem; */
+}
+.arroba{
+  font-size: 2.6rem;
+  font-weight: bold;
+  color: #fff;
+  margin-left: 1rem;
+  vertical-align: middle;
+}
+.ingresar-username{
+  display: block;
+  margin-left: 1rem;
+  color: #e0e0e0;
 }
 button {
-  display: block;
   width: 12rem;
   height: 3rem;
   margin: 1rem auto ;
@@ -103,10 +117,15 @@ button {
   cursor: pointer;
   transition: .2s ease;
 }
+button:hover {
+  box-shadow: 0px 0 5px 0 #fff;
+}
 .ruta-mas-corta {
+  display: block;
   background-color: #a2ebbe;
 }
 .arbol-minimo-prim {
+  display: block;
   background: #eaffdd;
 }
 .ruta-mas-corta:hover {
@@ -114,6 +133,10 @@ button {
 }
 .arbol-minimo-prim:hover {
   box-shadow: 0px 0 5px 0 #a2ebbe;
+}
+.generar-aristas{
+  display: block;
+  background: #eaffdd;
 }
 h2 {
   align-self: center;
