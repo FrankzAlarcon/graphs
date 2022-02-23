@@ -2,8 +2,8 @@
 
 /**
 * Clase que representa un Nodo
-@Atributos {
-  valor, vecinos, visitado, padre, distancia}
+* @example
+* const nuevoNodo = new Nodo({valor = 'dateNodo'})
 */
 class Nodo {
 

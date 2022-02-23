@@ -1,5 +1,12 @@
+//@ts-check
+//Librería para dibujar grafos
 import cytoscape from 'cytoscape';
 
+/**
+* Clase que permite dibujar Grafo
+* @example
+* const dibujarGrafo = new dibujarGrafo({id = 'dateNodo'})
+*/
 class DibujarGrafo {
   constructor(id) {
     this.graph = cytoscape({
@@ -10,8 +17,6 @@ class DibujarGrafo {
         rows: 2,
         cols: 2
       },
-
-
 
       style: [
         {
