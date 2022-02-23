@@ -1,21 +1,43 @@
 import Nodo from './Nodo.js';
-
+/**
+* Clase para crear un Grafo
+* @property {Object} nodos Objecto que almcena los Nodos del Grafo
+*/ 
 class Grafo {
   //Para metodos privados colocar # antes del nombre
   #nodos
   constructor() {
     this.#nodos = { };
   }
+
+  /**Obtener la propiedad que almacena los Nodos del grafo 
+  * @returns {Object} Objeto donde se almacenan los Nodos del Grafo
+  */
   get getNodos() {
     return this.#nodos
   }
+  /**Obtener un nodo por su Clave
+  * @param {object} Identificador\Clave de un nodo
+  * @returns {Nodo} Retorna el Nodo
+  */
   getNodoPorKey(keyNodo) {
     return Object.entries(this.#nodos).find(([key, value]) => key === JSON.stringify(keyNodo) ? value:null);
   }
+
+  /**Agregar un Nodo al Grafo 
+  * @param {Object} Dato/clave del Nodo a ingresar  
+  * @returns {void} 
+  */
   agregarNodo(valor){
     this.#nodos[JSON.stringify(valor)] = new Nodo(valor);
   }
-  /**Agrega una arista no dirigida */
+
+  /**Agregar una arista no dirigida 
+  * @param {Nodo} Nodo Origen
+  * @param {Nodo} Nodo Destino
+  * @param {number} Tamaño-Peso de la arista 
+  * @returns {void} 
+  */
   agregarAristaNoDirigida(origen, destino, peso) {
     //Si el origen y el destino existen en el grafo
     if(!Object.keys(this.#nodos).includes(JSON.stringify(origen))) {
@@ -25,10 +47,17 @@ class Grafo {
     if(!Object.keys(this.#nodos).includes(JSON.stringify(destino))){
       return new Error('No existe el nodo' + destino);
     }
+    // Del Nodo Origen -> Nodo Destino  && Nodo Destino -> Nodo Origen
     this.#nodos[JSON.stringify(origen)].agregarVecino(destino, peso);
     this.#nodos[JSON.stringify(destino)].agregarVecino(origen, peso);
   }
-  /**Agrega una arista dirigida */
+  
+  /**Agregar una arista Dirigida 
+  * @param {Nodo} Nodo Origen
+  * @param {Nodo} Nodo Destino
+  * @param {number} Peso de la arista 
+  * @returns {void}
+  */
   agregarAristaDirigida(origen, destino, peso) {
     //Si el origen y destino existen en el grafo
     if(!Object.keys(this.#nodos).includes(JSON.stringify(origen))) {
@@ -37,9 +66,14 @@ class Grafo {
     if(!Object.keys(this.#nodos).includes(JSON.stringify(destino))){
       return new Error('No existe el nodo' + destino);
     }
+    // Del Nodo Origen -> Nodo Destino 
     this.#nodos[JSON.stringify(origen)].agregarVecino(destino, peso);
   }
-  /**Imprime la matriz de adyacencia del Grafo */
+
+  /**Obtener la matriz de adyacencia del Grafo
+  * @returns {Array} Matriz de adyacencia
+  */
+  /** */
   matrizAdyacencia() {
     const matriz = [];
     let filas = [];
@@ -76,6 +110,7 @@ class Grafo {
       return v;
     }
   }
+
   /**ruta mas corta entre dos nodos */
   #camino(origen, destino) {
     let camino = [];
@@ -88,6 +123,7 @@ class Grafo {
     }
     return [camino, this.#nodos[JSON.stringify(destino)].distancia];
   }
+
   #bellmanFord(origen) {
     //Verificar que el vertice existe en el grafo
     if(Object.keys(this.#nodos).includes(JSON.stringify(origen))) {
@@ -131,6 +167,7 @@ class Grafo {
       return new Error('No existe el nodo en el grafo')
     }
   }
+  
   bellmanFordGrafo(origen, destino){
     try {
       this.#bellmanFord(origen);
@@ -139,7 +176,11 @@ class Grafo {
       console.log(error);
     }
   }
-  /**Calcula el arbol de expansion minimo desde un nodo */
+
+  /**Calcular el arbol de expansion minimo desde un nodo a través del algortimo de Prim 
+  * @param {Nodo} Nodo Inicial desde donde partir
+  * @returns {Array} Aristas del arbol de expansión mínima
+  */
   prim(nodoInicial) {
     const matriz = this.matrizAdyacencia();
     const numNodos = Object.keys(this.#nodos).length;

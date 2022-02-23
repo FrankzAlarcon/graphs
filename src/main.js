@@ -243,27 +243,35 @@ function llenarNodos(listaNodos){
     grafo.agregarNodo(user)
   })
 }
+
+//Generar un numero aleatorio entre un rango x & y
+function generarNumeroRandom(x,y) {
+  return Math.floor(Math.random()*(y-x))+x
+}
 function llenarAristasAuto() {
   //genera las aristas no dirigidas
   try {
+    //Por cada siguiendo del perfil principal
     misSeguidos.forEach(user => {
+        //Se dibuja una arista
         dibujoGrafo.dibujarArista(owner, user)
+        //Se agrega una arista no dirigida al grafo tomando en cuenta como peso de la arista el numero de seguidores del nodo destino 
         grafo.agregarAristaNoDirigida(owner, user, user.public_metrics.followers_count)
       })
   } catch (error) {
     console.log(error)
   }
-  dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[1])
-  dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[2])
-  dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[3])
-  dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[4])
-  dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[5])
+  // dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[1])
+  // dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[2])
+  // dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[3])
+  // dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[4])
+  // dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[5])
 /* Mis seguidos = 10 Nodos */
-  grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[1], misSeguidos[1].public_metrics.followers_count)
-  grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[2], misSeguidos[2].public_metrics.followers_count)
-  grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[3], misSeguidos[3].public_metrics.followers_count)
-  grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[4], misSeguidos[4].public_metrics.followers_count)
-  grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[5], misSeguidos[5].public_metrics.followers_count)
+  // grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[1], misSeguidos[1].public_metrics.followers_count)
+  // grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[2], misSeguidos[2].public_metrics.followers_count)
+  // grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[3], misSeguidos[3].public_metrics.followers_count)
+  // grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[4], misSeguidos[4].public_metrics.followers_count)
+  // grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[5], misSeguidos[5].public_metrics.followers_count)
   // dibujoGrafo.dibujarArista(misSeguidos[5], misSeguidos[0])
 }
 function llenarAristas(keysRutaCorta) {
