@@ -4,7 +4,7 @@ import Grafo from '../library/Grafo.js';
   Todo: generar aristas random (2 o 3 por nodo) excepto el primero.
   TOdo: Mejorar la interfaz y añadir controles para cuando se hace RMC o PRIM, puede ser mostrar un mensaje
   Todo: Consultar como subir backend y frontend a un server, creo que funcionaria en "Heroku".
-  Todo: crear las peticiciones desde el frontend
+  -Todo: crear las peticiciones desde el frontend. Terminado
   -Todo: Crear el algoritmo para arbol de expasion minimo en la misma clase grafo. TERMINADO
   -Todo: Implementar el arbol de expansio minimo dinamico. TERMINADO (probar para ver si hay bugs)
   -Todo: Crear dos canvas, uno es el grafo y el otro para mostrar el resultado. TERMINADO
