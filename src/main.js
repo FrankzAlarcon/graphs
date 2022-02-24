@@ -192,6 +192,21 @@ function initApp() {
     }
   });
 
+  const botonCrearGrafo = document.querySelector('.obtener-data');
+  botonCrearGrafo.addEventListener('click', async () => {
+    const inputUsername = document.getElementById('username');
+    if(inputUsername.value !== ''){
+      const datos = await getSeguidos(inputUsername.value);
+      if(datos.owner === null || datos.seguidores === null){
+        return console.log('No se ha obtenido la data')
+      }
+      owner = datos.owner;
+      seguidoresOwner = datos.seguidores;
+      llenarNodos(seguidoresOwner);
+      llenarAristasAuto();
+    }
+  });
+
   const dibujarNodosSeleccionados = []
   dibujoGrafo.graph.on('tap','node', (event) => {
     const target =event.target;
