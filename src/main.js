@@ -278,7 +278,6 @@ function llenarAristasAuto() {
   let contador;
   for(contador = 1; contador <= generarNumeroRandom(40,60); contador++){
     //Generar array con numeros randoms entre el 0 y 10
-    console.log(generarNumeroRandom(0,11))
     numerosRandom.push(generarNumeroRandom(0 , 11)); //Al Final
   }
   if(numerosRandom.length%2 != 0){
@@ -288,8 +287,9 @@ function llenarAristasAuto() {
   seguidoresOwner.push(owner)
   console.table(seguidoresOwner);
   for( contador = 0; contador <= numerosRandom.length-1; contador = contador + 2){
-    dibujoGrafo.dibujarArista(seguidoresOwner[numerosRandom[contador]], seguidoresOwner[numerosRandom[contador+1]])
-    grafo.agregarAristaNoDirigida(seguidoresOwner[numerosRandom[contador]], seguidoresOwner[numerosRandom[contador+1]], seguidoresOwner[numerosRandom[contador+1]].public_metrics.followers_count)
+    if(grafo.agregarAristaNoDirigida(seguidoresOwner[numerosRandom[contador]], seguidoresOwner[numerosRandom[contador+1]], seguidoresOwner[numerosRandom[contador+1]].public_metrics.followers_count)){
+      dibujoGrafo.dibujarArista(seguidoresOwner[numerosRandom[contador]], seguidoresOwner[numerosRandom[contador+1]])
+    }
   }
   seguidoresOwner.pop()
 }

@@ -33,10 +33,10 @@ class Grafo {
   }
 
   /**Agregar una arista no dirigida 
-  * @param {Nodo} Nodo Origen
-  * @param {Nodo} Nodo Destino
-  * @param {number} Tamaño-Peso de la arista 
-  * @returns {void} 
+  * @param {Nodo} origen Nodo Origen
+  * @param {Nodo} destino Nodo Destino
+  * @param {number} peso Tamaño-Peso de la arista 
+  * @returns {boolean} Retorna True si se ingreso la arista correctamente, Retorna False si ya existe la arista 
   */
   agregarAristaNoDirigida(origen, destino, peso) {
     //Si el origen y el destino existen en el grafo
@@ -48,8 +48,14 @@ class Grafo {
       return new Error('No existe el nodo' + destino);
     }
     // Del Nodo Origen -> Nodo Destino  && Nodo Destino -> Nodo Origen
-    this.#nodos[JSON.stringify(origen)].agregarVecino(destino, peso);
-    this.#nodos[JSON.stringify(destino)].agregarVecino(origen, peso);
+    if(this.#nodos[JSON.stringify(origen)].agregarVecino(this.#nodos[JSON.stringify(destino)], peso)
+    && this.#nodos[JSON.stringify(destino)].agregarVecino(this.#nodos[JSON.stringify(origen)],peso)){
+        console.log('Se ingreso correctamente');
+        return true;
+    }else{
+        console.log('Se repite el vertice');
+        return false;
+      }
   }
   
   /**Agregar una arista Dirigida 
