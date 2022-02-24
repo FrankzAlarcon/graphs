@@ -191,22 +191,6 @@ function initApp() {
       llenarAristasAuto();
     }
   });
-
-  const botonCrearGrafo = document.querySelector('.obtener-data');
-  botonCrearGrafo.addEventListener('click', async () => {
-    const inputUsername = document.getElementById('username');
-    if(inputUsername.value !== ''){
-      const datos = await getSeguidos(inputUsername.value);
-      if(datos.owner === null || datos.seguidores === null){
-        return console.log('No se ha obtenido la data')
-      }
-      owner = datos.owner;
-      seguidoresOwner = datos.seguidores;
-      llenarNodos(seguidoresOwner);
-      llenarAristasAuto();
-    }
-  });
-
   const dibujarNodosSeleccionados = []
   dibujoGrafo.graph.on('tap','node', (event) => {
     const target =event.target;
@@ -280,19 +264,19 @@ function llenarAristasAuto() {
   //genera las aristas no dirigidas
   try {
     //Por cada siguiendo del perfil principal
-    seguidoresOwner.forEach(user => {
-        //Se dibuja una arista
-        dibujoGrafo.dibujarArista(owner, user)
-        //Se agrega una arista no dirigida al grafo tomando en cuenta como peso de la arista el numero de seguidores del nodo destino 
-        grafo.agregarAristaNoDirigida(owner, user, user.public_metrics.followers_count)
-      })
+    // seguidoresOwner.forEach(user => {
+    //     //Se dibuja una arista
+    //     dibujoGrafo.dibujarArista(owner, user)
+    //     //Se agrega una arista no dirigida al grafo tomando en cuenta como peso de la arista el numero de seguidores del nodo destino 
+    //     grafo.agregarAristaNoDirigida(owner, user, user.public_metrics.followers_count)
+    //   })
   } catch (error) {
     console.log(error)
   }
   let numerosRandom = []
   //Generar un array de minimo 6 elementos maximo 20 elementos
   let contador;
-  for(contador = 1; contador <= generarNumeroRandom(6,20); contador++){
+  for(contador = 1; contador <= generarNumeroRandom(40,60); contador++){
     //Generar array con numeros randoms entre el 0 y 10
     console.log(generarNumeroRandom(0,11))
     numerosRandom.push(generarNumeroRandom(0 , 11)); //Al Final
@@ -301,21 +285,13 @@ function llenarAristasAuto() {
       //Si el numeros de elementos es impar, eliminamos el último 
       numerosRandom.pop();
   } 
+  seguidoresOwner.push(owner)
+  console.table(seguidoresOwner);
   for( contador = 0; contador <= numerosRandom.length-1; contador = contador + 2){
-    dibujoGrafo.dibujarArista(seguidoresOwner[contador], seguidoresOwner[contador + 1])
+    dibujoGrafo.dibujarArista(seguidoresOwner[numerosRandom[contador]], seguidoresOwner[numerosRandom[contador+1]])
+    grafo.agregarAristaNoDirigida(seguidoresOwner[numerosRandom[contador]], seguidoresOwner[numerosRandom[contador+1]], seguidoresOwner[numerosRandom[contador+1]].public_metrics.followers_count)
   }
-  // dibujoGrafo.dibujarArista(seguidoresOwner[0], seguidoresOwner[1])
-  // dibujoGrafo.dibujarArista(seguidoresOwner[0], seguidoresOwner[2])
-  // dibujoGrafo.dibujarArista(seguidoresOwner[0], seguidoresOwner[3])
-  // dibujoGrafo.dibujarArista(seguidoresOwner[0], seguidoresOwner[4])
-  // dibujoGrafo.dibujarArista(seguidoresOwner[0], seguidoresOwner[5])
-/* Mis seguidos = 10 Nodos */
-  // grafo.agregarAristaNoDirigida(seguidoresOwner[0], seguidoresOwner[1], seguidoresOwner[1].public_metrics.followers_count)
-  // grafo.agregarAristaNoDirigida(seguidoresOwner[0], seguidoresOwner[2], seguidoresOwner[2].public_metrics.followers_count)
-  // grafo.agregarAristaNoDirigida(seguidoresOwner[0], seguidoresOwner[3], seguidoresOwner[3].public_metrics.followers_count)
-  // grafo.agregarAristaNoDirigida(seguidoresOwner[0], seguidoresOwner[4], seguidoresOwner[4].public_metrics.followers_count)
-  // grafo.agregarAristaNoDirigida(seguidoresOwner[0], seguidoresOwner[5], seguidoresOwner[5].public_metrics.followers_count)
-  // dibujoGrafo.dibujarArista(seguidoresOwner[5], seguidoresOwner[0])
+  seguidoresOwner.pop()
 }
 function llenarAristas(keysRutaCorta) {
   const dibujoGrafoRMC =  new DibujarGrafo('result');
