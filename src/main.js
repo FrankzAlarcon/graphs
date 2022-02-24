@@ -4,7 +4,7 @@ import Grafo from '../library/Grafo.js';
   Todo: generar aristas random (2 o 3 por nodo) excepto el primero.
   TOdo: Mejorar la interfaz y añadir controles para cuando se hace RMC o PRIM, puede ser mostrar un mensaje
   Todo: Consultar como subir backend y frontend a un server, creo que funcionaria en "Heroku".
-  Todo: crear las peticiciones desde el frontend
+  -Todo: crear las peticiciones desde el frontend. Terminado
   -Todo: Crear el algoritmo para arbol de expasion minimo en la misma clase grafo. TERMINADO
   -Todo: Implementar el arbol de expansio minimo dinamico. TERMINADO (probar para ver si hay bugs)
   -Todo: Crear dos canvas, uno es el grafo y el otro para mostrar el resultado. TERMINADO
@@ -17,144 +17,143 @@ import Grafo from '../library/Grafo.js';
 let dibujoGrafo = new DibujarGrafo('graph');
 const nodosParaRutaMasCorta = [];
 const grafo = new Grafo();
+let seguidoresOwner = [];
+let owner = {};
+// let seguidoresOwner = [
+//   {
+//     "id": "756982074",
+//     "name": "🌸Nia Lakshart🌸 KOI 💜",
+//     "username": "LakshartNia",
+//     "public_metrics": {
+//       "followers_count": 536768,
+//       "following_count": 269,
+//       "tweet_count": 33752,
+//       "listed_count": 231
+//     }
+//   },
+//   {
+//     "id": "1266722595916873729",
+//     "name": "xTheFocuSx",
+//     "username": "xTheFocuSx",
+//     "public_metrics": {
+//       "followers_count": 738639,
+//       "following_count": 113,
+//       "tweet_count": 2036,
+//       "listed_count": 184
+//     }
+//   },
+//   {
+//     "id": "459275531",
+//     "name": "JavaScript Daily",
+//     "username": "JavaScriptDaily",
+//     "public_metrics": {
+//       "followers_count": 506803,
+//       "following_count": 154,
+//       "tweet_count": 15537,
+//       "listed_count": 8021
+//     }
+//   },
+//   {
+//     "id": "139092348",
+//     "name": "Sergio Kun Aguero",
+//     "username": "aguerosergiokun",
+//     "public_metrics": {
+//       "followers_count": 14717992,
+//       "following_count": 142,
+//       "tweet_count": 4987,
+//       "listed_count": 18009
+//     }
+//   },
+//   {
+//     "id": "143183218",
+//     "name": "LeonidasEsteban.css",
+//     "username": "LeonidasEsteban",
+//     "public_metrics": {
+//       "followers_count": 56967,
+//       "following_count": 1133,
+//       "tweet_count": 27768,
+//       "listed_count": 585
+//     }
+//   },
+//   {
+//     "id": "1120977827883405313",
+//     "name": "ぐりこ",
+//     "username": "mrkms_",
+//     "public_metrics": {
+//       "followers_count": 21146,
+//       "following_count": 257,
+//       "tweet_count": 237,
+//       "listed_count": 61
+//     }
+//   },
+//   {
+//     "id": "1566463268",
+//     "name": "React",
+//     "username": "reactjs",
+//     "public_metrics": {
+//       "followers_count": 553567,
+//       "following_count": 270,
+//       "tweet_count": 2470,
+//       "listed_count": 6466
+//     }
+//   },
+//   {
+//     "id": "3167734591",
+//     "name": "Visual Studio Code",
+//     "username": "code",
+//     "public_metrics": {
+//       "followers_count": 452970,
+//       "following_count": 134,
+//       "tweet_count": 6127,
+//       "listed_count": 5468
+//     }
+//   },
+//   {
+//     "id": "91985735",
+//     "name": "Node.js",
+//     "username": "nodejs",
+//     "public_metrics": {
+//       "followers_count": 766876,
+//       "following_count": 642,
+//       "tweet_count": 6996,
+//       "listed_count": 8738
+//     }
+//   },
+//   {
+//     "id": "13334762",
+//     "name": "GitHub",
+//     "username": "github",
+//     "public_metrics": {
+//       "followers_count": 2212512,
+//       "following_count": 332,
+//       "tweet_count": 6825,
+//       "listed_count": 17041
+//     }
+//   }
+// ];
 
-let misSeguidos = [
-  {
-    "id": "756982074",
-    "name": "🌸Nia Lakshart🌸 KOI 💜",
-    "username": "LakshartNia",
-    "public_metrics": {
-      "followers_count": 536768,
-      "following_count": 269,
-      "tweet_count": 33752,
-      "listed_count": 231
-    }
-  },
-  {
-    "id": "1266722595916873729",
-    "name": "xTheFocuSx",
-    "username": "xTheFocuSx",
-    "public_metrics": {
-      "followers_count": 738639,
-      "following_count": 113,
-      "tweet_count": 2036,
-      "listed_count": 184
-    }
-  },
-  {
-    "id": "459275531",
-    "name": "JavaScript Daily",
-    "username": "JavaScriptDaily",
-    "public_metrics": {
-      "followers_count": 506803,
-      "following_count": 154,
-      "tweet_count": 15537,
-      "listed_count": 8021
-    }
-  },
-  {
-    "id": "139092348",
-    "name": "Sergio Kun Aguero",
-    "username": "aguerosergiokun",
-    "public_metrics": {
-      "followers_count": 14717992,
-      "following_count": 142,
-      "tweet_count": 4987,
-      "listed_count": 18009
-    }
-  },
-  {
-    "id": "143183218",
-    "name": "LeonidasEsteban.css",
-    "username": "LeonidasEsteban",
-    "public_metrics": {
-      "followers_count": 56967,
-      "following_count": 1133,
-      "tweet_count": 27768,
-      "listed_count": 585
-    }
-  },
-  {
-    "id": "1120977827883405313",
-    "name": "ぐりこ",
-    "username": "mrkms_",
-    "public_metrics": {
-      "followers_count": 21146,
-      "following_count": 257,
-      "tweet_count": 237,
-      "listed_count": 61
-    }
-  },
-  {
-    "id": "1566463268",
-    "name": "React",
-    "username": "reactjs",
-    "public_metrics": {
-      "followers_count": 553567,
-      "following_count": 270,
-      "tweet_count": 2470,
-      "listed_count": 6466
-    }
-  },
-  {
-    "id": "3167734591",
-    "name": "Visual Studio Code",
-    "username": "code",
-    "public_metrics": {
-      "followers_count": 452970,
-      "following_count": 134,
-      "tweet_count": 6127,
-      "listed_count": 5468
-    }
-  },
-  {
-    "id": "91985735",
-    "name": "Node.js",
-    "username": "nodejs",
-    "public_metrics": {
-      "followers_count": 766876,
-      "following_count": 642,
-      "tweet_count": 6996,
-      "listed_count": 8738
-    }
-  },
-  {
-    "id": "13334762",
-    "name": "GitHub",
-    "username": "github",
-    "public_metrics": {
-      "followers_count": 2212512,
-      "following_count": 332,
-      "tweet_count": 6825,
-      "listed_count": 17041
-    }
-  }
-];
-
-const owner = {
-  username: "KunAguero",
-  id: "12345678",
-  public_metrics: {
-      "followers_count": 1112529,
-      "following_count": 429,
-      "tweet_count": 7474,
-      "listed_count": 60
-  },
-  name: "Kun Aguero"
-}
-// misSeguidos.push(owner)
-// let misSeguidos = []
-document.addEventListener('DOMContentLoaded',  /*async */() => {
-  // await getSeguidos();
+// const owner = {
+//   username: "KunAguero",
+//   id: "12345678",
+//   public_metrics: {
+//       "followers_count": 1112529,
+//       "following_count": 429,
+//       "tweet_count": 7474,
+//       "listed_count": 60
+//   },
+//   name: "Kun Aguero"
+// }
+// seguidoresOwner.push(owner)
+// let seguidoresOwner = []
+document.addEventListener('DOMContentLoaded',  () => {
   initApp()
-  llenarNodos(misSeguidos);
-  llenarAristasAuto();
 })
 
 function initApp() {
   //Añade los eventos en botones necesarios para que funciona la app
   const botonRutaMasCorta = document.querySelector('.ruta-mas-corta');
   botonRutaMasCorta.addEventListener('click', () => {
+    botonRutaMasCorta.style.backgroundColor = 'yellow';
     if(nodosParaRutaMasCorta.length === 2) {
       const data =   rutaMasCorta(nodosParaRutaMasCorta[0], nodosParaRutaMasCorta[1]);
       nodosParaRutaMasCorta.length = 0;
@@ -166,8 +165,10 @@ function initApp() {
     }
   });
 
+
   const botonArbolExpMin = document.querySelector('.arbol-minimo-prim');
   botonArbolExpMin.addEventListener('click', () => {
+    botonArbolExpMin.style.backgroundColor = 'yellow';
     if(nodosParaRutaMasCorta.length === 1){
     const resultados = arbolExpMin(nodosParaRutaMasCorta[0]);
     nodosParaRutaMasCorta.length = 0;
@@ -176,6 +177,20 @@ function initApp() {
     llenarAristasPrim(resultados);
     console.log('matriz adyacencia',grafo.matrizAdyacencia());
   }});
+  const botonCrearGrafo = document.querySelector('.obtener-data');
+  botonCrearGrafo.addEventListener('click', async () => {
+    const inputUsername = document.getElementById('username');
+    if(inputUsername.value !== ''){
+      const datos = await getSeguidos(inputUsername.value);
+      if(datos.owner === null || datos.seguidores === null){
+        return console.log('No se ha obtenido la data')
+      }
+      owner = datos.owner;
+      seguidoresOwner = datos.seguidores;
+      llenarNodos(seguidoresOwner);
+      llenarAristasAuto();
+    }
+  });
 
   const dibujarNodosSeleccionados = []
   dibujoGrafo.graph.on('tap','node', (event) => {
@@ -216,22 +231,18 @@ function pintarAzul() {
     element.style({'background-color': '#11aaff', 'border-color': '#88aaff'});
   })
 }
-async function getSeguidos() {
+async function getSeguidos(username) {
   //hace fetch para obtener los datos
-  const misSeguidosContainer = document.querySelector('.seguidos')
-  misSeguidos = await fetch('http://localhost:3100/get')
+  const owner = await fetch(`http://localhost:3100/get-owner/${username}`)
   .then(response => response.json())
-  .then(data => data.body.data)
-  .catch(error => console.log(error))
-  console.log('localhost',misSeguidos)
-  if(!misSeguidos){
+  .then(responseJson => responseJson.body.data);
+  const seguidores = await fetch(`http://localhost:3100/get/${username}`)
+  .then(response => response.json())
+  .then(responseJson => responseJson.body.data);
+  if(!seguidores || !owner){
     return null;
   }
-  misSeguidos.forEach(persona => {
-    const p = document.createElement('P');
-    p.textContent = persona.name;
-    misSeguidosContainer.appendChild(p)
-  })
+  return {owner, seguidores};
 }
 
 function llenarNodos(listaNodos){
@@ -244,15 +255,17 @@ function llenarNodos(listaNodos){
   })
 }
 
-//Generar un numero aleatorio entre un rango x & y
+//Generar un numero aleatorio entre un rango [x, y]
 function generarNumeroRandom(x,y) {
   return Math.floor(Math.random()*(y-x))+x
 }
+
+
 function llenarAristasAuto() {
   //genera las aristas no dirigidas
   try {
     //Por cada siguiendo del perfil principal
-    misSeguidos.forEach(user => {
+    seguidoresOwner.forEach(user => {
         //Se dibuja una arista
         dibujoGrafo.dibujarArista(owner, user)
         //Se agrega una arista no dirigida al grafo tomando en cuenta como peso de la arista el numero de seguidores del nodo destino 
@@ -261,18 +274,33 @@ function llenarAristasAuto() {
   } catch (error) {
     console.log(error)
   }
-  // dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[1])
-  // dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[2])
-  // dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[3])
-  // dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[4])
-  // dibujoGrafo.dibujarArista(misSeguidos[0], misSeguidos[5])
+  let numerosRandom = []
+  //Generar un array de minimo 6 elementos maximo 20 elementos
+  let contador;
+  for(contador = 1; contador <= generarNumeroRandom(6,20); contador++){
+    //Generar array con numeros randoms entre el 0 y 10
+    console.log(generarNumeroRandom(0,11))
+    numerosRandom.push(generarNumeroRandom(0 , 11)); //Al Final
+  }
+  if(numerosRandom.length%2 != 0){
+      //Si el numeros de elementos es impar, eliminamos el último 
+      numerosRandom.pop();
+  } 
+  for( contador = 0; contador <= numerosRandom.length-1; contador = contador + 2){
+    dibujoGrafo.dibujarArista(seguidoresOwner[contador], seguidoresOwner[contador + 1])
+  }
+  // dibujoGrafo.dibujarArista(seguidoresOwner[0], seguidoresOwner[1])
+  // dibujoGrafo.dibujarArista(seguidoresOwner[0], seguidoresOwner[2])
+  // dibujoGrafo.dibujarArista(seguidoresOwner[0], seguidoresOwner[3])
+  // dibujoGrafo.dibujarArista(seguidoresOwner[0], seguidoresOwner[4])
+  // dibujoGrafo.dibujarArista(seguidoresOwner[0], seguidoresOwner[5])
 /* Mis seguidos = 10 Nodos */
-  // grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[1], misSeguidos[1].public_metrics.followers_count)
-  // grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[2], misSeguidos[2].public_metrics.followers_count)
-  // grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[3], misSeguidos[3].public_metrics.followers_count)
-  // grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[4], misSeguidos[4].public_metrics.followers_count)
-  // grafo.agregarAristaNoDirigida(misSeguidos[0], misSeguidos[5], misSeguidos[5].public_metrics.followers_count)
-  // dibujoGrafo.dibujarArista(misSeguidos[5], misSeguidos[0])
+  // grafo.agregarAristaNoDirigida(seguidoresOwner[0], seguidoresOwner[1], seguidoresOwner[1].public_metrics.followers_count)
+  // grafo.agregarAristaNoDirigida(seguidoresOwner[0], seguidoresOwner[2], seguidoresOwner[2].public_metrics.followers_count)
+  // grafo.agregarAristaNoDirigida(seguidoresOwner[0], seguidoresOwner[3], seguidoresOwner[3].public_metrics.followers_count)
+  // grafo.agregarAristaNoDirigida(seguidoresOwner[0], seguidoresOwner[4], seguidoresOwner[4].public_metrics.followers_count)
+  // grafo.agregarAristaNoDirigida(seguidoresOwner[0], seguidoresOwner[5], seguidoresOwner[5].public_metrics.followers_count)
+  // dibujoGrafo.dibujarArista(seguidoresOwner[5], seguidoresOwner[0])
 }
 function llenarAristas(keysRutaCorta) {
   const dibujoGrafoRMC =  new DibujarGrafo('result');

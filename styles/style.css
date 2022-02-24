@@ -120,24 +120,23 @@ button {
 button:hover {
   box-shadow: 0px 0 5px 0 #fff;
 }
-.ruta-mas-corta {
+.ruta-mas-corta{
+  background-color: whitesmoke;
   display: block;
-  background-color: #a2ebbe;
+}
+
+.ruta-mas-corta:hover  {
+  box-shadow: 0px 0 5px 0 #a2ebbe;
 }
 .arbol-minimo-prim {
+  background-color: whitesmoke;
   display: block;
-  background: #eaffdd;
-}
-.ruta-mas-corta:hover {
-  box-shadow: 0px 0 5px 0 #a2ebbe;
 }
 .arbol-minimo-prim:hover {
   box-shadow: 0px 0 5px 0 #a2ebbe;
 }
-.generar-aristas{
-  display: block;
-  background: #eaffdd;
-}
+
+
 h2 {
   align-self: center;
   color: azure;

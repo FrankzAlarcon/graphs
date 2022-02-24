@@ -118,7 +118,7 @@ class Grafo {
     actual = JSON.stringify(actual)
     while(actual !== null) {
       camino.unshift(actual);
-      console.log('camino',actual)
+      // console.log('camino',actual)
       actual = this.#nodos[actual].padre;
     }
     return [camino, this.#nodos[JSON.stringify(destino)].distancia];
