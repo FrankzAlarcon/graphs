@@ -116,6 +116,7 @@ button {
   border-radius: .5rem;
   cursor: pointer;
   transition: .2s ease;
+  display: block;
 }
 button:hover {
   box-shadow: 0px 0 5px 0 #fff;

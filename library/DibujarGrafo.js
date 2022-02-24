@@ -9,7 +9,7 @@ import cytoscape from 'cytoscape';
 */
 class DibujarGrafo {
   constructor(id) {
-    this.x= 20;
+    this.x= 0;
     this.y = 20;
     this.graph = cytoscape({
       container: document.getElementById(id),
@@ -55,7 +55,7 @@ class DibujarGrafo {
   /***Paremetros */
   if(this.x >= 650){
     this.x = 20
-    this.y =  this.y + 150
+    this.y =  this.y + 150 + Math.random()*10
   }
     this.x = this.x + 200;
     this.graph.add({group: 'nodes',data: {id: nodo.username, name: nodo.name}, position: {x: this.x, y: this.y}})
@@ -66,6 +66,7 @@ class DibujarGrafo {
   dibujarAristaConPeso(origen, destino, peso) {
     this.graph.add({group: 'edges', data: {id:`${origen.username}-${destino.username}`, source: origen.username, target: destino.username, label: peso}})
   }
+
 }
 
 export default DibujarGrafo;

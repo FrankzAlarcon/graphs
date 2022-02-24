@@ -33,13 +33,10 @@ class Nodo {
       //Si ya existe el vertice
       return false  
     }else {
-      this.vecinos.push([destino, peso])
-      console.table(this.vecinos);
-      console.log(this.vecinos[0].valor);
-      const resultado = this.valor.username + " --> " + destino.valor.username
-      console.log(resultado)
-      console.log('Se agrego vertice')
-      
+      //Caso contrario se agrega
+      this.vecinos.push([destino, peso]);
+      const resultado = this.valor.username + " --> " + destino.valor.username;
+      console.log(resultado);     
       return true
     }
   }

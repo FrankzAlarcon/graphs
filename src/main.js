@@ -263,13 +263,7 @@ function generarNumeroRandom(x,y) {
 function llenarAristasAuto() {
   //genera las aristas no dirigidas
   try {
-    //Por cada siguiendo del perfil principal
-    // seguidoresOwner.forEach(user => {
-    //     //Se dibuja una arista
-    //     dibujoGrafo.dibujarArista(owner, user)
-    //     //Se agrega una arista no dirigida al grafo tomando en cuenta como peso de la arista el numero de seguidores del nodo destino 
-    //     grafo.agregarAristaNoDirigida(owner, user, user.public_metrics.followers_count)
-    //   })
+
   } catch (error) {
     console.log(error)
   }
@@ -285,7 +279,6 @@ function llenarAristasAuto() {
       numerosRandom.pop();
   } 
   seguidoresOwner.push(owner)
-  console.table(seguidoresOwner);
   for( contador = 0; contador <= numerosRandom.length-1; contador = contador + 2){
     if(grafo.agregarAristaNoDirigida(seguidoresOwner[numerosRandom[contador]], seguidoresOwner[numerosRandom[contador+1]], seguidoresOwner[numerosRandom[contador+1]].public_metrics.followers_count)){
       dibujoGrafo.dibujarArista(seguidoresOwner[numerosRandom[contador]], seguidoresOwner[numerosRandom[contador+1]])
@@ -341,6 +334,7 @@ function llenarAristasPrim(keysPrim) {
 function rutaMasCorta(origen, destino) {
   //Retorna un string con las keys de los nodos y se almacena en data
   const data = grafo.bellmanFordGrafo(origen, destino);
+  console.log(data)
   return data[0].map(user => JSON.parse(user));//transforma las keys a objetos
 }
 function arbolExpMin(origen) {

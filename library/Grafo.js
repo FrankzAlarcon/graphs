@@ -50,10 +50,8 @@ class Grafo {
     // Del Nodo Origen -> Nodo Destino  && Nodo Destino -> Nodo Origen
     if(this.#nodos[JSON.stringify(origen)].agregarVecino(this.#nodos[JSON.stringify(destino)], peso)
     && this.#nodos[JSON.stringify(destino)].agregarVecino(this.#nodos[JSON.stringify(origen)],peso)){
-        console.log('Se ingreso correctamente');
         return true;
     }else{
-        console.log('Se repite el vertice');
         return false;
       }
   }
@@ -150,19 +148,21 @@ class Grafo {
       actual = JSON.stringify(actual)
       while(noVisitados.length > 0) {
         //Mientras existan nodos no visitados
-        for(let vecino of this.#nodos[actual].vecinos) {
+        let NodoAux = this.#nodos[actual];
+        this.#nodos[actual].vecinos.some(function(vecino){
           //Por cada vecino en el nodo origen
-          if(this.#nodos[JSON.stringify(vecino[0])].visitado === false) {
+          if(vecino[0].visitado === false) {
             //por cada vecino no visitado [vecino, peso]
-            if(this.#nodos[actual].distancia + vecino[1] < this.#nodos[JSON.stringify(vecino[0])].distancia) {
+            let aux2 = NodoAux.distancia + vecino[1] 
+            if(aux2< vecino[0].distancia) {
               //Si la distancia actual + distancia del vecino es menor que la distancia del vecino
               //Se actualiza la distancia a la suma
-              this.#nodos[JSON.stringify(vecino[0])].distancia = this.#nodos[actual].distancia + vecino[1];
+              (vecino[0].distancia) = NodoAux.distancia + vecino[1];
               //Establecer como padre del nodo vecino al nodo actual
-              this.#nodos[JSON.stringify(vecino[0])].padre = actual;
+              vecino[0].padre = actual;
             }
           }
-        }
+        });
         //Establecer el vertice actual como visitado y removerlo de la lista de no visitados
         this.#nodos[actual].visitado = true;
         noVisitados = noVisitados.filter(nodo => JSON.stringify(nodo.valor) !== actual);
