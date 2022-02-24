@@ -30,6 +30,7 @@ class Nodo {
     return vecino[0].valor.username == destino.valor.username
     });
     if(resultado) {
+      //Si ya existe el vertice
       return false  
     }else {
       this.vecinos.push([destino, peso])
