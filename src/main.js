@@ -175,7 +175,7 @@ function initApp() {
     dibujarNodosSeleccionados.length = 0;
     pintarAzul();
     llenarAristasPrim(resultados);
-    console.log('matriz adyacencia',grafo.matrizAdyacencia());
+    
   }});
   const botonCrearGrafo = document.querySelector('.obtener-data');
   botonCrearGrafo.addEventListener('click', async () => {
@@ -270,6 +270,7 @@ function llenarAristasAuto() {
   let numerosRandom = []
   //Generar un array de minimo 6 elementos maximo 20 elementos
   let contador;
+  //generar Conexxiones Random
   for(contador = 1; contador <= generarNumeroRandom(40,60); contador++){
     //Generar array con numeros randoms entre el 0 y 10
     numerosRandom.push(generarNumeroRandom(0 , 11)); //Al Final
@@ -278,12 +279,15 @@ function llenarAristasAuto() {
       //Si el numeros de elementos es impar, eliminamos el último 
       numerosRandom.pop();
   } 
+  //Se agrega el owner  a los seguidores
   seguidoresOwner.push(owner)
   for( contador = 0; contador <= numerosRandom.length-1; contador = contador + 2){
     if(grafo.agregarAristaNoDirigida(seguidoresOwner[numerosRandom[contador]], seguidoresOwner[numerosRandom[contador+1]], seguidoresOwner[numerosRandom[contador+1]].public_metrics.followers_count)){
+      //Si no existe el vertice y se puedo ingresar correctamente
       dibujoGrafo.dibujarArista(seguidoresOwner[numerosRandom[contador]], seguidoresOwner[numerosRandom[contador+1]])
     }
   }
+  //Quito el último
   seguidoresOwner.pop()
 }
 function llenarAristas(keysRutaCorta) {
@@ -309,32 +313,42 @@ function llenarAristas(keysRutaCorta) {
 
 }
 function llenarAristasPrim(keysPrim) {
-  const dibujoGrafoRMC =  new DibujarGrafo('result');
+  const dibujoGrafoPrim =  new DibujarGrafo('result');
   const keys = Object.keys(keysPrim);
+
   keys.forEach(key => {
-    dibujoGrafoRMC.dibujarNodo(JSON.parse(key));
+    dibujoGrafoPrim.dibujarNodo(JSON.parse(key));
   });
+ 
   const datosAgraficar = {};
   const nodosGrafo = Object.values(grafo.getNodos);
+  
   keys.forEach(key => {
+
+    
     const dato = nodosGrafo.find(nodo => nodo.valor.id === JSON.parse(key).id);
-    datosAgraficar[JSON.stringify(dato)] = [];
+
+    datosAgraficar[JSON.stringify(dato.valor)] = [];
     keysPrim[key].forEach(nodo => {
-      if(dato.vecinos.map(vecino => vecino[0].id).includes(nodo.id)){
-        datosAgraficar[JSON.stringify(dato)].push(dato.vecinos.find(vecino => vecino[0].id === nodo.id));
+      
+      if(dato.vecinos.map(vecino => vecino[0].valor.id).includes(nodo.id)){
+        
+        datosAgraficar[JSON.stringify(dato.valor)].push(dato.vecinos.find(vecino => vecino[0].valor.id === nodo.id));
       }
     })
   });
+
+  console.log('datos a graficar',datosAgraficar)
   Object.keys(datosAgraficar).forEach(key => {
     datosAgraficar[key].forEach(nodo => {
-      dibujoGrafoRMC.dibujarAristaConPeso(JSON.parse(key).valor, nodo[0], nodo[1]);
+      dibujoGrafoPrim.dibujarAristaConPeso(JSON.parse(key), nodo[0].valor, nodo[1]);
     })
   });
 }
 function rutaMasCorta(origen, destino) {
   //Retorna un string con las keys de los nodos y se almacena en data
   const data = grafo.bellmanFordGrafo(origen, destino);
-  console.log(data)
+
   return data[0].map(user => JSON.parse(user));//transforma las keys a objetos
 }
 function arbolExpMin(origen) {
@@ -343,16 +357,16 @@ function arbolExpMin(origen) {
   const keysUnicas = {};
   resultadosJS.forEach(resultado => {
     //obtengo los nodos diferentes
-    if(!Object.keys(keysUnicas).find(key => resultado[0].username === JSON.parse(key).username)) {
+    if(!Object.keys(keysUnicas).find(key => resultado[0].username === JSON.parse(key)?.username)) {
       keysUnicas[JSON.stringify(resultado[0])] = [];
     }
-    if(!Object.keys(keysUnicas).find(key => resultado[1].username === JSON.parse(key).username)) {
+    if(!Object.keys(keysUnicas).find(key => resultado[1].username === JSON.parse(key)?.username)) {
       keysUnicas[JSON.stringify(resultado[1])] = [];
     }
   });
   Object.keys(keysUnicas).forEach(key => {
     resultadosJS.forEach(resultado => {
-      if(resultado[0].username === JSON.parse(key).username){
+      if(resultado[0].username === JSON.parse(key)?.username){
         keysUnicas[key].push(resultado[1]);
       }
     })

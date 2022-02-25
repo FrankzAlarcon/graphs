@@ -50,8 +50,10 @@ class Grafo {
     // Del Nodo Origen -> Nodo Destino  && Nodo Destino -> Nodo Origen
     if(this.#nodos[JSON.stringify(origen)].agregarVecino(this.#nodos[JSON.stringify(destino)], peso)
     && this.#nodos[JSON.stringify(destino)].agregarVecino(this.#nodos[JSON.stringify(origen)],peso)){
+      //Si se ingreso correctamente y no Existe el vertice retorna True
         return true;
     }else{
+      //Si ya existe el vertice retorna False
         return false;
       }
   }
@@ -83,11 +85,17 @@ class Grafo {
     let filas = [];
     if(Object.keys(this.#nodos).length !== 0) {
       let valoresNodos = Object.values(this.#nodos);
+      console.table(valoresNodos);
       for(let fila of valoresNodos) {
         for(let columna of valoresNodos) {
-          let ids = fila.vecinos.map(vecino => JSON.stringify(vecino[0]))
+          // let ids = fila.vecinos.map(function callback(vecino){
+          //   return vecino[0]});
+
+          let ids = fila.vecinos.map(vecino => JSON.stringify(vecino[0].valor))
           if(ids.includes(JSON.stringify(columna.valor))) {
-            let index = ids.findIndex(id => JSON.stringify(columna.valor) === id);
+            let index = ids.findIndex(id => columna.valor.id === JSON.parse(id).id);
+      
+            
             filas.push(fila.vecinos[index][1]);
           } else {
             filas.push(Number.POSITIVE_INFINITY);
@@ -127,7 +135,7 @@ class Grafo {
     }
     return [camino, this.#nodos[JSON.stringify(destino)].distancia];
   }
-
+  //
   #bellmanFord(origen) {
     //Verificar que el vertice existe en el grafo
     if(Object.keys(this.#nodos).includes(JSON.stringify(origen))) {

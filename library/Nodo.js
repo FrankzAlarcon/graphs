@@ -23,17 +23,16 @@ class Nodo {
    * @returns {boolean} Retorna True si se ingresa correctamente, Retorna False si no se ingresa correctamente.
   */
   agregarVecino(destino, peso) {
-    //Si el destino no está en la lista de adyacencia
-    let aux = [destino,peso]
-    
+    //Si el destino no está en la lista de adyacencia vecinos del nodo Origen
     const resultado = this.vecinos.some(function(vecino){
+      //Retorno True Si ya existe el vertice, False si no existe
     return vecino[0].valor.username == destino.valor.username
     });
     if(resultado) {
-      //Si ya existe el vertice
+      //Si ya existe el vertice retorna Falso y no los agrega
       return false  
     }else {
-      //Caso contrario se agrega
+      //Caso contrario se agrega y retorna Verdadero
       this.vecinos.push([destino, peso]);
       const resultado = this.valor.username + " --> " + destino.valor.username;
       console.log(resultado);     
