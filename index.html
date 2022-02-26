@@ -22,26 +22,35 @@
     </header>
     <main class="main-content">
       <section class="main-section">
-        <h2>Selecciona dos nodos y calcula la ruta mas corta</h2>
         <label for="username">
           <span class="ingresar-username">Ingrese el username: </span>
           <span class="arroba">@</span>
           <input id="username" type="text" placeholder="Ingresa un @ de twitter"/>
           <button class="obtener-data">Crear Grafo</button>
-          <!-- <button class="generar-aristas button">Generar Aristas</button> -->
+          <p class="fetch-error">EL usuario ingresado no existe</p>
         </label>
-        <button class="ruta-mas-corta button">Ruta Mas Corta</button>
-        <button class="arbol-minimo-prim button">Arbol Exp.Min</button>
+        <div class="ruta-mas-corta-container">
+          <h3>Ruta más corta</h3>
+          <p>Para utlizar el algoritmo de ruta más corta debes seleccionar 2 nodos</p>
+          <button class="ruta-mas-corta button">Ruta Mas Corta</button>
+          <p class="rmc-error">Debes seleccionar 2 nodos</p>
+        </div>
+        <div class="arbol-expansion-minimo-container">
+          <h3>Árbol de Expansión Mínimo</h3>
+          <p>Para generar el árbol de expansión mínimo debes seleccionar 1 nodo</p>
+          <button class="arbol-minimo-prim button">Arbol Exp.Min</button>
+          <p class="prim-error">Debes seleccionar 1 nodo</p>
+        </div>
       </section>
       <section id="app">
-        <h2>Grafo Inicial</h2>
+        <h2 class="grafo-inicial-text">Grafo Inicial</h2>
         <div id="graph"></div>
-        <h2>Resultados</h2>
+        <h2 class="grafo-resultados-text">Resultados</h2>
         <div id="result"></div>
       </section>
     </main>
     <footer>
-      <span class="bold">Creado por: </span>Frankz Alarcon, Christian Pazmiño, Jhonattan Amagua.
+      <span class="bold">Creado por: </span>Frankz Alarcón, Christian Pazmiño, Jhonattan Amagua.
     </footer>
     <!-- <script type="module" src="/index.js"></script> -->
     <!-- <script type="module" src="./library/graph.js"></script> -->

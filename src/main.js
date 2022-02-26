@@ -1,9 +1,10 @@
 import DibujarGrafo from '../library/DibujarGrafo.js';
 import Grafo from '../library/Grafo.js';
 /* 
-  Todo: generar aristas random (2 o 3 por nodo) excepto el primero.
-  TOdo: Mejorar la interfaz y añadir controles para cuando se hace RMC o PRIM, puede ser mostrar un mensaje
   Todo: Consultar como subir backend y frontend a un server, creo que funcionaria en "Heroku".
+  Todo: Mostrar la complejidad
+  -TOdo: Mejorar la interfaz y añadir controles para cuando se hace RMC o PRIM, puede ser mostrar un mensaje Terminado
+  -Todo: generar aristas random (2 o 3 por nodo) excepto el primero. Terminado
   -Todo: crear las peticiciones desde el frontend. Terminado
   -Todo: Crear el algoritmo para arbol de expasion minimo en la misma clase grafo. TERMINADO
   -Todo: Implementar el arbol de expansio minimo dinamico. TERMINADO (probar para ver si hay bugs)
@@ -16,135 +17,11 @@ import Grafo from '../library/Grafo.js';
 
 let dibujoGrafo = new DibujarGrafo('graph');
 const nodosParaRutaMasCorta = [];
-const grafo = new Grafo();
+const dibujarNodosSeleccionados = [];
+let grafo = new Grafo();
 let seguidoresOwner = [];
 let owner = {};
-// let seguidoresOwner = [
-//   {
-//     "id": "756982074",
-//     "name": "🌸Nia Lakshart🌸 KOI 💜",
-//     "username": "LakshartNia",
-//     "public_metrics": {
-//       "followers_count": 536768,
-//       "following_count": 269,
-//       "tweet_count": 33752,
-//       "listed_count": 231
-//     }
-//   },
-//   {
-//     "id": "1266722595916873729",
-//     "name": "xTheFocuSx",
-//     "username": "xTheFocuSx",
-//     "public_metrics": {
-//       "followers_count": 738639,
-//       "following_count": 113,
-//       "tweet_count": 2036,
-//       "listed_count": 184
-//     }
-//   },
-//   {
-//     "id": "459275531",
-//     "name": "JavaScript Daily",
-//     "username": "JavaScriptDaily",
-//     "public_metrics": {
-//       "followers_count": 506803,
-//       "following_count": 154,
-//       "tweet_count": 15537,
-//       "listed_count": 8021
-//     }
-//   },
-//   {
-//     "id": "139092348",
-//     "name": "Sergio Kun Aguero",
-//     "username": "aguerosergiokun",
-//     "public_metrics": {
-//       "followers_count": 14717992,
-//       "following_count": 142,
-//       "tweet_count": 4987,
-//       "listed_count": 18009
-//     }
-//   },
-//   {
-//     "id": "143183218",
-//     "name": "LeonidasEsteban.css",
-//     "username": "LeonidasEsteban",
-//     "public_metrics": {
-//       "followers_count": 56967,
-//       "following_count": 1133,
-//       "tweet_count": 27768,
-//       "listed_count": 585
-//     }
-//   },
-//   {
-//     "id": "1120977827883405313",
-//     "name": "ぐりこ",
-//     "username": "mrkms_",
-//     "public_metrics": {
-//       "followers_count": 21146,
-//       "following_count": 257,
-//       "tweet_count": 237,
-//       "listed_count": 61
-//     }
-//   },
-//   {
-//     "id": "1566463268",
-//     "name": "React",
-//     "username": "reactjs",
-//     "public_metrics": {
-//       "followers_count": 553567,
-//       "following_count": 270,
-//       "tweet_count": 2470,
-//       "listed_count": 6466
-//     }
-//   },
-//   {
-//     "id": "3167734591",
-//     "name": "Visual Studio Code",
-//     "username": "code",
-//     "public_metrics": {
-//       "followers_count": 452970,
-//       "following_count": 134,
-//       "tweet_count": 6127,
-//       "listed_count": 5468
-//     }
-//   },
-//   {
-//     "id": "91985735",
-//     "name": "Node.js",
-//     "username": "nodejs",
-//     "public_metrics": {
-//       "followers_count": 766876,
-//       "following_count": 642,
-//       "tweet_count": 6996,
-//       "listed_count": 8738
-//     }
-//   },
-//   {
-//     "id": "13334762",
-//     "name": "GitHub",
-//     "username": "github",
-//     "public_metrics": {
-//       "followers_count": 2212512,
-//       "following_count": 332,
-//       "tweet_count": 6825,
-//       "listed_count": 17041
-//     }
-//   }
-// ];
 
-// const owner = {
-//   username: "KunAguero",
-//   id: "12345678",
-//   public_metrics: {
-//       "followers_count": 1112529,
-//       "following_count": 429,
-//       "tweet_count": 7474,
-//       "listed_count": 60
-//   },
-//   name: "Kun Aguero"
-// }
-// seguidoresOwner.push(owner)
-// let seguidoresOwner = []
 document.addEventListener('DOMContentLoaded',  () => {
   initApp()
 })
@@ -153,7 +30,7 @@ function initApp() {
   //Añade los eventos en botones necesarios para que funciona la app
   const botonRutaMasCorta = document.querySelector('.ruta-mas-corta');
   botonRutaMasCorta.addEventListener('click', () => {
-    botonRutaMasCorta.style.backgroundColor = 'yellow';
+    // botonRutaMasCorta.style.backgroundColor = 'yellow';
     if(nodosParaRutaMasCorta.length === 2) {
       const data =   rutaMasCorta(nodosParaRutaMasCorta[0], nodosParaRutaMasCorta[1]);
       nodosParaRutaMasCorta.length = 0;
@@ -161,39 +38,65 @@ function initApp() {
       pintarAzul();
       llenarAristas(data);
     } else {
-      console.log('Se deben seleccionar 2 nodos');
+      const mensajeError =  document.querySelector('.rmc-error');
+      if(mensajeError.style.display === 'none' || mensajeError.style.display === '') {
+        mensajeError.style.display = 'block';
+        setTimeout(() => {
+          mensajeError.style.display = 'none';
+        }, 3000);        
+      }
     }
   });
 
-
   const botonArbolExpMin = document.querySelector('.arbol-minimo-prim');
   botonArbolExpMin.addEventListener('click', () => {
-    botonArbolExpMin.style.backgroundColor = 'yellow';
+    // botonArbolExpMin.style.backgroundColor = 'yellow';
     if(nodosParaRutaMasCorta.length === 1){
-    const resultados = arbolExpMin(nodosParaRutaMasCorta[0]);
-    nodosParaRutaMasCorta.length = 0;
-    dibujarNodosSeleccionados.length = 0;
-    pintarAzul();
-    llenarAristasPrim(resultados);
-    
-  }});
+      const resultados = arbolExpMin(nodosParaRutaMasCorta[0]);
+      nodosParaRutaMasCorta.length = 0;
+      dibujarNodosSeleccionados.length = 0;
+      pintarAzul();
+      llenarAristasPrim(resultados);
+    } else {
+      const mensajeError =  document.querySelector('.prim-error');
+      if(mensajeError.style.display === 'none' || mensajeError.style.display === '') {
+        mensajeError.style.display = 'block';
+        setTimeout(() => {
+          mensajeError.style.display = 'none';
+        }, 3000);        
+      }
+    }
+  });
   const botonCrearGrafo = document.querySelector('.obtener-data');
   botonCrearGrafo.addEventListener('click', async () => {
+    const resultado = new DibujarGrafo('result');
     const inputUsername = document.getElementById('username');
     if(inputUsername.value !== ''){
       const datos = await getSeguidos(inputUsername.value);
-      if(datos.owner === null || datos.seguidores === null){
-        return console.log('No se ha obtenido la data')
+      if(datos === null){
+        const mensajeError =  document.querySelector('.fetch-error');
+        if(mensajeError.style.display === 'none' || mensajeError.style.display === '') {
+          mensajeError.style.display = 'block';
+          setTimeout(() => {
+            mensajeError.style.display = 'none';
+          }, 3000);        
+        }
+        return 
       }
       owner = datos.owner;
       seguidoresOwner = datos.seguidores;
       llenarNodos(seguidoresOwner);
       llenarAristasAuto();
+      const textoGrafo = document.querySelector('.grafo-inicial-text');
+      textoGrafo.textContent = 'Grafo Inicial: Seguidos de ' + owner.username;
     }
   });
-  const dibujarNodosSeleccionados = []
+  listenerDibujarGrafo()
+}
+function listenerDibujarGrafo() {
   dibujoGrafo.graph.on('tap','node', (event) => {
     const target =event.target;
+    console.log('click')
     const nodos = Object.values(grafo.getNodos)
     if(dibujarNodosSeleccionados.length === 0) {
       dibujarNodosSeleccionados.push(target);
@@ -222,9 +125,10 @@ function initApp() {
         target.style({'background-color': '#ff6d53', 'border-color': 'black'});        
       }
     }
+    console.log('long dibujarnodos', dibujarNodosSeleccionados.length)
+    console.log('long nodos para RCM', nodosParaRutaMasCorta.length)
   });
 }
-
 function pintarAzul() {
   dibujoGrafo.graph.elements().forEach(element => {
     element.style({'background-color': '#11aaff', 'border-color': '#88aaff'});
@@ -245,6 +149,9 @@ async function getSeguidos(username) {
 }
 
 function llenarNodos(listaNodos){
+  dibujoGrafo = new DibujarGrafo('graph');
+  grafo = new Grafo();
+  listenerDibujarGrafo()
   //Añade los nodos al grafo y los dibuja
   dibujoGrafo.dibujarNodo(owner)
   grafo.agregarNodo(owner)

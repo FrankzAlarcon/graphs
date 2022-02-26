@@ -4,7 +4,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -51,6 +51,14 @@ body {
 canvas {
   left: 0;
 }
+h3{
+  text-align: center;
+  color: #ffffec;
+  font-size: 2.5rem;
+}
+p{
+  color: #dadada;
+}
 .header-container{
   display: flex;
   justify-content: space-around;
@@ -94,6 +102,9 @@ input {
 
   /* margin-left: 1rem; */
 }
+.main-section {
+  margin-top: 2rem;
+}
 .arroba{
   font-size: 2.6rem;
   font-weight: bold;
@@ -121,6 +132,19 @@ button {
 button:hover {
   box-shadow: 0px 0 5px 0 #fff;
 }
+.obtener-data{
+  display: inline-block;
+  margin-left: .5rem;
+}
+
+.ruta-mas-corta-container{
+  margin: 1rem 0 0 1rem;
+  border-bottom: 1px solid gray;
+}
+.arbol-expansion-minimo-container{
+  margin: 1rem 0 0 1rem;
+  border-bottom: 1px solid gray;
+}
 .ruta-mas-corta{
   background-color: whitesmoke;
   display: block;
@@ -129,12 +153,22 @@ button:hover {
 .ruta-mas-corta:hover  {
   box-shadow: 0px 0 5px 0 #a2ebbe;
 }
-.arbol-minimo-prim {
+.arbol-minimo-prim { 
   background-color: whitesmoke;
   display: block;
 }
 .arbol-minimo-prim:hover {
   box-shadow: 0px 0 5px 0 #a2ebbe;
+}
+.rmc-error, .prim-error, .fetch-error{
+  display: none;
+  text-align: center;
+  background-color: rgb(255, 71, 71);
+  padding: .5rem 0;
+  border-radius: .5rem;
+  margin-bottom: 1rem;
+  color: #fff;
+  font-weight: bold;
 }
 
 
