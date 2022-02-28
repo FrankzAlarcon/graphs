@@ -2,7 +2,7 @@ import DibujarGrafo from '../library/DibujarGrafo.js';
 import Grafo from '../library/Grafo.js';
 /* 
   Todo: Consultar como subir backend y frontend a un server, creo que funcionaria en "Heroku".
-  Todo: Mostrar la complejidad
+  -Todo: Mostrar la complejidad (terminado)
   -TOdo: Mejorar la interfaz y añadir controles para cuando se hace RMC o PRIM, puede ser mostrar un mensaje Terminado
   -Todo: generar aristas random (2 o 3 por nodo) excepto el primero. Terminado
   -Todo: crear las peticiciones desde el frontend. Terminado
@@ -91,11 +91,6 @@ function initApp() {
             mensajeError.style.display = 'none';
           }, 3000);        
         }
-        //Reiniciar los textos de las complejidades
-        const complejidadTextoPrim = document.querySelector('.prim-complejidad');
-        complejidadTextoPrim.textContent = 'Aristas * log(Vertices)';
-        const complejidadTextoRmc = document.querySelector('.rmc-complejidad');
-        complejidadTextoRmc.textContent = 'Vertices * Aristas';
         return 
       }
       owner = datos.owner;
@@ -104,6 +99,11 @@ function initApp() {
       llenarAristasAuto();
       const textoGrafo = document.querySelector('.grafo-inicial-text');
       textoGrafo.textContent = 'Grafo Inicial: Seguidos de ' + owner.username;
+      //Reiniciar los textos de las complejidades
+      const complejidadTextoPrim = document.querySelector('.prim-complejidad');
+      complejidadTextoPrim.textContent = 'Aristas * log(Vertices)';
+      const complejidadTextoRmc = document.querySelector('.rmc-complejidad');
+      complejidadTextoRmc.textContent = 'Vertices * Aristas';
     }
   });
   listenerDibujarGrafo()
