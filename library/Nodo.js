@@ -34,8 +34,8 @@ class Nodo {
     }else {
       //Caso contrario se agrega y retorna Verdadero
       this.vecinos.push([destino, peso]);
-      const resultado = this.valor.username + " --> " + destino.valor.username;
-      console.log(resultado);     
+      // const resultado = this.valor.username + " --> " + destino.valor.username;
+      // console.log(resultado);     
       return true
     }
   }

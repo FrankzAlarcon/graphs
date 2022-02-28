@@ -105,12 +105,14 @@ input {
 .main-section {
   margin-top: 2rem;
 }
-.arroba{
-  font-size: 2.6rem;
+.bold{
   font-weight: bold;
+}
+.arroba {
   color: #fff;
   margin-left: 1rem;
   vertical-align: middle;
+  font-size: 2.6rem;
 }
 .ingresar-username{
   display: block;
