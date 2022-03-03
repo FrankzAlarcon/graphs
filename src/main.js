@@ -125,8 +125,6 @@ function listenerDibujarGrafo() {
         target.style({'background-color': '#ff6d53', 'border-color': 'black'});        
       }
     }
-    console.log('long dibujarnodos', dibujarNodosSeleccionados.length)
-    console.log('long nodos para RCM', nodosParaRutaMasCorta.length)
   });
 }
 function pintarAzul() {
@@ -134,6 +132,7 @@ function pintarAzul() {
     element.style({'background-color': '#11aaff', 'border-color': '#88aaff'});
   })
 }
+
 async function getSeguidos(username) {
   //hace fetch para obtener los datos
   const owner = await fetch(`https://grafos-backend-epn.herokuapp.com/get-owner/${username}`)
