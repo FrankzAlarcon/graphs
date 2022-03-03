@@ -23,8 +23,8 @@
     <main class="main-content">
       <section class="main-section">
         <label for="username">
-          <span class="ingresar-username">Ingrese el username: </span>
-          <span class="arroba">@</span>
+          <span class="bold ingresar-username">Ingrese el username: </span>
+          <span class="bold arroba">@</span>
           <input id="username" type="text" placeholder="Ingresa un @ de twitter"/>
           <button class="obtener-data">Crear Grafo</button>
           <p class="fetch-error">EL usuario ingresado no existe</p>
@@ -32,12 +32,14 @@
         <div class="ruta-mas-corta-container">
           <h3>Ruta más corta</h3>
           <p>Para utlizar el algoritmo de ruta más corta debes seleccionar 2 nodos</p>
+          <p><span class="bold">Complejidad: </span><span class="rmc-complejidad cambio-complejidad">Vertices * Aristas</span></p>
           <button class="ruta-mas-corta button">Ruta Mas Corta</button>
           <p class="rmc-error">Debes seleccionar 2 nodos</p>
         </div>
         <div class="arbol-expansion-minimo-container">
           <h3>Árbol de Expansión Mínimo</h3>
           <p>Para generar el árbol de expansión mínimo debes seleccionar 1 nodo</p>
+          <p><span class="bold">Complejidad: </span><span class="prim-complejidad cambio-complejidad">Aristas * log(Vertices)</span></p>
           <button class="arbol-minimo-prim button">Arbol Exp.Min</button>
           <p class="prim-error">Debes seleccionar 1 nodo</p>
         </div>

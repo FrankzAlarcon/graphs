@@ -2,7 +2,7 @@ import DibujarGrafo from '../library/DibujarGrafo.js';
 import Grafo from '../library/Grafo.js';
 /* 
   Todo: Consultar como subir backend y frontend a un server, creo que funcionaria en "Heroku".
-  Todo: Mostrar la complejidad
+  -Todo: Mostrar la complejidad (terminado)
   -TOdo: Mejorar la interfaz y añadir controles para cuando se hace RMC o PRIM, puede ser mostrar un mensaje Terminado
   -Todo: generar aristas random (2 o 3 por nodo) excepto el primero. Terminado
   -Todo: crear las peticiciones desde el frontend. Terminado
@@ -14,13 +14,14 @@ import Grafo from '../library/Grafo.js';
  */
 
 
-
+//Variables globales
 let dibujoGrafo = new DibujarGrafo('graph');
 const nodosParaRutaMasCorta = [];
 const dibujarNodosSeleccionados = [];
 let grafo = new Grafo();
 let seguidoresOwner = [];
 let owner = {};
+let aristas = 0;
 
 document.addEventListener('DOMContentLoaded',  () => {
   initApp()
@@ -35,6 +36,10 @@ function initApp() {
       const data =   rutaMasCorta(nodosParaRutaMasCorta[0], nodosParaRutaMasCorta[1]);
       nodosParaRutaMasCorta.length = 0;
       dibujarNodosSeleccionados.length = 0;
+      const complejidadTextoRmc = document.querySelector('.rmc-complejidad');
+      complejidadTextoRmc.textContent = (seguidoresOwner.length + 1) * aristas;
+      const complejidadTextoPrim = document.querySelector('.prim-complejidad');
+      complejidadTextoPrim.textContent = 'Aristas * log(Vertices)';
       pintarAzul();
       llenarAristas(data);
     } else {
@@ -55,6 +60,10 @@ function initApp() {
       const resultados = arbolExpMin(nodosParaRutaMasCorta[0]);
       nodosParaRutaMasCorta.length = 0;
       dibujarNodosSeleccionados.length = 0;
+      const complejidadTextoPrim = document.querySelector('.prim-complejidad');
+      complejidadTextoPrim.textContent = Math.round(aristas * Math.log10(seguidoresOwner.length + 1) * 100) /100;
+      const complejidadTextoRmc = document.querySelector('.rmc-complejidad');
+      complejidadTextoRmc.textContent = 'Vertices * Aristas';
       pintarAzul();
       llenarAristasPrim(resultados);
     } else {
@@ -74,6 +83,7 @@ function initApp() {
     if(inputUsername.value !== ''){
       const datos = await getSeguidos(inputUsername.value);
       if(datos === null){
+        //Mostrar mensaje no se han obtenido datos
         const mensajeError =  document.querySelector('.fetch-error');
         if(mensajeError.style.display === 'none' || mensajeError.style.display === '') {
           mensajeError.style.display = 'block';
@@ -89,6 +99,11 @@ function initApp() {
       llenarAristasAuto();
       const textoGrafo = document.querySelector('.grafo-inicial-text');
       textoGrafo.textContent = 'Grafo Inicial: Seguidos de ' + owner.username;
+      //Reiniciar los textos de las complejidades
+      const complejidadTextoPrim = document.querySelector('.prim-complejidad');
+      complejidadTextoPrim.textContent = 'Aristas * log(Vertices)';
+      const complejidadTextoRmc = document.querySelector('.rmc-complejidad');
+      complejidadTextoRmc.textContent = 'Vertices * Aristas';
     }
   });
   listenerDibujarGrafo()
@@ -96,7 +111,6 @@ function initApp() {
 function listenerDibujarGrafo() {
   dibujoGrafo.graph.on('tap','node', (event) => {
     const target =event.target;
-    console.log('click')
     const nodos = Object.values(grafo.getNodos)
     if(dibujarNodosSeleccionados.length === 0) {
       dibujarNodosSeleccionados.push(target);
@@ -162,7 +176,7 @@ function llenarNodos(listaNodos){
 
 //Generar un numero aleatorio entre un rango [x, y]
 function generarNumeroRandom(x,y) {
-  return Math.floor(Math.random()*(y-x))+x
+  return Math.floor(Math.random()*(y-x))+x;
 }
 
 
@@ -173,7 +187,7 @@ function llenarAristasAuto() {
   } catch (error) {
     console.log(error)
   }
-  let numerosRandom = []
+  let numerosRandom = [];
   //Generar un array de minimo 6 elementos maximo 20 elementos
   let contador;
   //generar Conexxiones Random
@@ -186,15 +200,16 @@ function llenarAristasAuto() {
       numerosRandom.pop();
   } 
   //Se agrega el owner  a los seguidores
-  seguidoresOwner.push(owner)
+  seguidoresOwner.push(owner);
   for( contador = 0; contador <= numerosRandom.length-1; contador = contador + 2){
     if(grafo.agregarAristaNoDirigida(seguidoresOwner[numerosRandom[contador]], seguidoresOwner[numerosRandom[contador+1]], seguidoresOwner[numerosRandom[contador+1]].public_metrics.followers_count)){
-      //Si no existe el vertice y se puedo ingresar correctamente
-      dibujoGrafo.dibujarArista(seguidoresOwner[numerosRandom[contador]], seguidoresOwner[numerosRandom[contador+1]])
+      //Si no existe el vertice y se pudo ingresar correctamente
+      aristas++;
+      dibujoGrafo.dibujarArista(seguidoresOwner[numerosRandom[contador]], seguidoresOwner[numerosRandom[contador+1]]);
     }
   }
   //Quito el último
-  seguidoresOwner.pop()
+  seguidoresOwner.pop();
 }
 function llenarAristas(keysRutaCorta) {
   const dibujoGrafoRMC =  new DibujarGrafo('result');
@@ -209,12 +224,12 @@ function llenarAristas(keysRutaCorta) {
   const datosAgraficar = [];
   keysRutaCorta.forEach(nodo => {
     //obtiene los datos necesarios para la graficación correcta de aristas (username, peso)
-    datosAgraficar.push(nodosGrafo.find(node => node.valor.id === nodo.id))
+    datosAgraficar.push(nodosGrafo.find(node => node.valor.id === nodo.id));
   })
 
   for(let i = 1; i < datosAgraficar.length; i++) {
     //Añade las aristas para que se dibujen
-    dibujoGrafoRMC.dibujarAristaConPeso(datosAgraficar[i-1].valor, datosAgraficar[i].valor, datosAgraficar[i].distancia - datosAgraficar[i-1].distancia)
+    dibujoGrafoRMC.dibujarAristaConPeso(datosAgraficar[i-1].valor, datosAgraficar[i].valor, datosAgraficar[i].distancia - datosAgraficar[i-1].distancia);
   }
 
 }
@@ -225,7 +240,7 @@ function llenarAristasPrim(keysPrim) {
   keys.forEach(key => {
     dibujoGrafoPrim.dibujarNodo(JSON.parse(key));
   });
- 
+
   const datosAgraficar = {};
   const nodosGrafo = Object.values(grafo.getNodos);
   
@@ -244,7 +259,6 @@ function llenarAristasPrim(keysPrim) {
     })
   });
 
-  console.log('datos a graficar',datosAgraficar)
   Object.keys(datosAgraficar).forEach(key => {
     datosAgraficar[key].forEach(nodo => {
       dibujoGrafoPrim.dibujarAristaConPeso(JSON.parse(key), nodo[0].valor, nodo[1]);
