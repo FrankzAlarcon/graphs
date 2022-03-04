@@ -9,12 +9,14 @@
     "docs": "jsdoc -c jsdoc.json"
   },
   "devDependencies": {
+    "tui-jsdoc-template": "^1.2.2",
     "vite": "^2.8.0"
   },
   "dependencies": {
     "cytoscape": "^3.21.0",
     "cytoscape-edgehandles": "^4.0.1",
-    "jsdoc": "^3.6.10"
+    "jsdoc": "^3.6.10",
+    "node-fetch": "^2.6.1"
   },
-  "type": "module"
+  "type": "commonjs"
 }

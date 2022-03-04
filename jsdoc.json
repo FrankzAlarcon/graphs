@@ -6,12 +6,18 @@
         "excludePattern": "(node_modules|docs)"
     },
     "templates": {
-    "cleverLinks": true,
-    "monospaceLinks": true
+        "cleverLinks": true,
+        "monospaceLinks": true,
+        "footerText": "© Derechos Reservados 2022 Frankz Alarcon Christian Pazmiño Jonathan Amagua",
+        "logo": {
+        "url": "",
+        "width": "120px",
+        "height": "15px"
+        }
     },
     "opts": {
         "recurse": true,
-        "destination": "./docs"
-
+        "destination": "./docs",
+        "template": "node_modules/tui-jsdoc-template"
     }
 }

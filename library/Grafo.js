@@ -2,7 +2,10 @@ import Nodo from './Nodo.js';
 /**
 * Clase para crear un Grafo
 * @property {Object} nodos Objecto que almcena los Nodos del Grafo
-*/ 
+* @example
+* const nuevoGrafo = new Grafo()
+*/
+
 class Grafo {
   //Para metodos privados colocar # antes del nombre
   #nodos
