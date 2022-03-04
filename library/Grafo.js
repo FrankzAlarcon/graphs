@@ -82,7 +82,6 @@ class Grafo {
   /**Obtener la matriz de adyacencia del Grafo
   * @returns {Array} Matriz de adyacencia
   */
-  /** */
   matrizAdyacencia() {
     const matriz = [];
     let filas = [];
@@ -110,7 +109,10 @@ class Grafo {
     }
     return matriz;
   }
-
+  /**Calcular el nodo con distancia mínima de una lista 
+  * @param {Array} lista Lista con los nodos a recorrer 
+  * @returns {Nodo} Retorna el nodo con la distancia mínima
+  */
   #minimo(lista) {
     if(lista.length > 0) {
       let distancia = this.#nodos[JSON.stringify(lista[0].valor)].distancia;
@@ -125,8 +127,11 @@ class Grafo {
       return v;
     }
   }
-
-  /**ruta mas corta entre dos nodos */
+  /**Calcular la ruta mas corta entre dos nodos
+  * @param {Nodo} origen Nodo Origen  
+  * @param {Nodo} lista Nodo Destino  
+  * @returns {Array} Retorna una lista que contiene un array que representa el camino de nodos y un valor qu representa la distancia recorrida
+  */
   #camino(origen, destino) {
     let camino = [];
     let actual = destino;
@@ -138,7 +143,11 @@ class Grafo {
     }
     return [camino, this.#nodos[JSON.stringify(destino)].distancia];
   }
-  //
+  /**Calcular la ruta mas corta entre dos nodos
+  * @param {Nodo} origen Nodo Origen  
+  * @param {Nodo} lista Nodo Destino  
+  * @returns {Array} Retorna una lista que contiene un array que representa el camino de nodos y un valor qu representa la distancia recorrida
+  */
   #bellmanFord(origen) {
     //Verificar que el vertice existe en el grafo
     if(Object.keys(this.#nodos).includes(JSON.stringify(origen))) {

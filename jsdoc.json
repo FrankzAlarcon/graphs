@@ -18,6 +18,7 @@
     "opts": {
         "recurse": true,
         "destination": "./docs",
-        "template": "node_modules/tui-jsdoc-template"
+        "template": "node_modules/tui-jsdoc-template",
+        "tutorials": "./Tutoriales"
     }
 }
