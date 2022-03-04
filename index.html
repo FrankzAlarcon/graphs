@@ -27,7 +27,12 @@
           <span class="bold arroba">@</span>
           <input id="username" type="text" placeholder="Ingresa un @ de twitter"/>
           <button class="obtener-data">Crear Grafo</button>
+          <input id="limitNodes" type="number" placeholder="Ingresa un limite nodos" />
           <p class="fetch-error">EL usuario ingresado no existe</p>
+        </label>
+        <label for="limitNodes">
+          <span class="bold ingresar-limitNodes">Ingrese el límite de Nodos (Min:10 - Max:100): </span>
+          <input id="limitNodes" min='10' max='100' type="number" placeholder="Ingresa un limite nodos" />
         </label>
         <div class="ruta-mas-corta-container">
           <h3>Ruta más corta</h3>

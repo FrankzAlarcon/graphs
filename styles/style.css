@@ -119,6 +119,11 @@ input {
   margin-left: 1rem;
   color: #e0e0e0;
 }
+.ingresar-limitNodes{
+  display: block;
+  margin-left: 1rem;
+  color: #e0e0e0;
+}
 button {
   width: 12rem;
   height: 3rem;
