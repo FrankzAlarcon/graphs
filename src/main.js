@@ -209,9 +209,10 @@ function llenarAristasAuto() {
   let numerosRandom = [];
   //Generar un array de minimo 6 elementos maximo 20 elementos
   let contador;
-  const limiteNodos = 10 //CAMBIAR--------------------------------------------
+  const limiteNodos = parseInt(document.getElementById('limitNodes').value) 
+  // const limiteNodos = 10 /
   //generar Conexxiones Random
-  for(contador = 1; contador <= generarNumeroRandom(40,60); contador++){
+  for(contador = 1; contador <= generarNumeroRandom(limiteNodos * 5,limiteNodos * 6); contador++){
     //Generar array con numeros randoms entre el 0 y Límite Máximo
     numerosRandom.push(generarNumeroRandom(0 , limiteNodos+1)); //Al Final
   }
