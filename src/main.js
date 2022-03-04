@@ -80,8 +80,27 @@ function initApp() {
   botonCrearGrafo.addEventListener('click', async () => {
     const resultado = new DibujarGrafo('result');
     const inputUsername = document.getElementById('username');
-    if(inputUsername.value !== ''){
-      const datos = await getSeguidos(inputUsername.value);
+    const inputLimit = document.getElementById('limitNodes');
+    const limit = parseInt(inputLimit.value);
+    if(inputUsername.value !== '') {
+      let datos;
+      if(inputLimit.value === ''){
+        datos = await getSeguidos(inputUsername.value);
+      } else {
+        if(limit >= 10 && limit <= 100) {
+          datos = await getSeguidos(inputUsername.value, inputLimit.value);
+        } else {
+          //Mostrar mensaje no se han obtenido datos
+          const mensajeError =  document.querySelector('.limit-error');
+          if(mensajeError.style.display === 'none' || mensajeError.style.display === '') {
+            mensajeError.style.display = 'block';
+            setTimeout(() => {
+              mensajeError.style.display = 'none';
+            }, 3000);        
+          }
+          return 
+        }
+      }
       if(datos === null){
         //Mostrar mensaje no se han obtenido datos
         const mensajeError =  document.querySelector('.fetch-error');
@@ -147,12 +166,12 @@ function pintarAzul() {
   })
 }
 
-async function getSeguidos(username) {
+async function getSeguidos(username, limit = 10) {
   //hace fetch para obtener los datos
   const owner = await fetch(`https://grafos-backend-epn.herokuapp.com/get-owner/${username}`)
   .then(response => response.json())
   .then(responseJson => responseJson.body.data);
-  const seguidores = await fetch(`https://grafos-backend-epn.herokuapp.com/get/${username}`)
+  const seguidores = await fetch(`https://grafos-backend-epn.herokuapp.com/get/${username}/${limit}`)
   .then(response => response.json())
   .then(responseJson => responseJson.body.data);
   if(!seguidores || !owner){

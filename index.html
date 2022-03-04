@@ -22,18 +22,20 @@
     </header>
     <main class="main-content">
       <section class="main-section">
-        <label for="username">
-          <span class="bold ingresar-username">Ingrese el username: </span>
-          <span class="bold arroba">@</span>
-          <input id="username" type="text" placeholder="Ingresa un @ de twitter"/>
-          <button class="obtener-data">Crear Grafo</button>
-          <input id="limitNodes" type="number" placeholder="Ingresa un limite nodos" />
-          <p class="fetch-error">EL usuario ingresado no existe</p>
-        </label>
-        <label for="limitNodes">
-          <span class="bold ingresar-limitNodes">Ingrese el límite de Nodos (Min:10 - Max:100): </span>
-          <input id="limitNodes" min='10' max='100' type="number" placeholder="Ingresa un limite nodos" />
-        </label>
+        <div class="datos-fetch">
+          <label for="username">
+            <span class="bold ingresar-username">Ingrese el username: </span>
+            <span class="bold arroba">@</span>
+            <input id="username" type="text" placeholder="Ingresa un @ de twitter"/>
+            <button class="obtener-data">Crear Grafo</button>
+          </label>
+          <label for="limitNodes">
+            <span class="bold ingresar-limitNodes">Ingrese el límite de Nodos (Min:10 - Max:100): </span>
+            <input id="limitNodes" min='10' max='100' type="number" placeholder="Límite"/>
+          </label>
+          <p class="limit-error">Debe ser un número entre 10 y 100</p>
+          <p class="fetch-error">El usuario ingresado no existe</p>
+        </div>
         <div class="ruta-mas-corta-container">
           <h3>Ruta más corta</h3>
           <p>Para utlizar el algoritmo de ruta más corta debes seleccionar 2 nodos</p>
